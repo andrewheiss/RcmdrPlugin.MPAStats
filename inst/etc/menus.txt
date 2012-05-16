@@ -1,0 +1,57 @@
+# R Commander Menu Definitions
+
+#remove  continuousMenu  "" "" "" "" ""
+
+#   type    menu/item   operation/parent    label                   command/menu        activation    install?
+    menu    byuMenu     topMenu             ""                      ""                  ""            ""
+    item    topMenu     cascade             "BYU MPA"               byuMenu             ""            ""
+    item    byuMenu     command             "Hello world"           helloWorld          ""            ""
+    item    byuMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
+                                                                                                    
+                                                                                                    
+#-----------------------------                                                                      
+# Descriptive statistics submenu                                                                    
+                                                                                                    
+    menu    descStats   byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade           "Descriptive statistics"  descStats           ""            ""
+    item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
+    item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
+    item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""
+    item    descStats   command             "Binary..."             helloWorld          "activeDataSetP()"    ""
+                                                                                                    
+                                                                                                    
+#-----------------------------                                                                      
+# Confidence intervals submenu                                                                      
+                                                                                                    
+    menu    confInts    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Confidence intervals"  confInts            ""            ""
+    item    confInts    command             "Interval..."           helloWorld          "numericP()"            ""
+    item    confInts    command             "Binary..."             helloWorld          "numericP()"            ""
+                                                                                                    
+                                                                                                    
+#-----------------------------                                                                      
+# Bivariate analysis submenu                                                                        
+                                                                                                    
+    menu    bivAnal     byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Bivariate analysis"    bivAnal             ""            ""
+    item    bivAnal     command             "Something..."          helloWorld          "numericP(2)"            ""
+                                                                                                    
+                                                                                                    
+#-----------------------------                                                                      
+# Multivariate analysis submenu                                                                     
+                                                                                                    
+    menu    multAnal    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Multivariate analysis" multAnal            ""            ""
+    item    multAnal    command             "Linear regression..."  linearModel         "numericP(2)"  ""
+    item    multAnal    command   "Ordinal logistic regression..."  helloWorld          "numericP(2)"            ""
+    item    multAnal    command           "Logistic regression..."  helloWorld          "numericP(2)"            ""
+                                                                                                    
+                                                                                                    
+#-----------------------------                                                                      
+# Diagnostics submenu                                                                               
+                                                                                                    
+    menu    diagMenu    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Diagnostics"           diagMenu            ""            ""
+    item    diagMenu    command             "Box plots..."          boxPlot             "numericP()"            ""
+    item    diagMenu    command             "Normality tests..."    helloWorld          ""            ""
+    item    diagMenu    command             "SD test..."            helloWorld          ""            ""
