@@ -37,6 +37,10 @@ helloWorld <- function() {
   doItAndPrint(command)
 }
 
+summarizeDataframe <- function() {
+  doItAndPrint(paste("DataframeSummary(", ActiveDataSet(), ")", sep = ""))
+}
+
 helloWorldDialog <- function() {
   initializeDialog(title=gettextRcmdr("Hello World Dialog"))
   nameVar <- tclVar("world")
