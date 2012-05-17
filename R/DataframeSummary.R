@@ -1,4 +1,4 @@
-DataframeSummary <- function(x) {
+DataframeSummary <- function(x, conf.intervals=TRUE) {
   if (class(x) != "data.frame") 
     stop("must supply a dataframe")
   
@@ -18,6 +18,19 @@ DataframeSummary <- function(x) {
     results.continuous <- data.frame(x.mean, x.sd, x.min, x.max, x.n, x.na)
     colnames(results.continuous) <- c("Mean", "Std Dev", "Min", "Max", "N", "NAs")
     rownames(results.continuous) <- row.names
+    
+    # Optionall add confidence interval columns  TODO: Make sure this can handle missing values
+    if (conf.intervals==TRUE) { 
+      calculate.confidence.intervals <- function(x, ...) {  
+        temp <- t.test(x)
+        c(temp$conf.int[1L], temp$conf.int[2L])
+      }
+      
+      conf.table <- t(apply(x.continuous, 2, calculate.confidence.intervals))
+      colnames(conf.table) <- c("95% Conf. (lower)", "95% Conf. (upper)")
+      
+      results.continuous <- cbind(results.continuous, conf.table)
+    }
     
     # Print the results
     writeLines("Summary of continuous variables")
