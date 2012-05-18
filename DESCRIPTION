@@ -1,8 +1,8 @@
 Package:		RcmdrPlugin.BYUMPA
 Type:			Package
 Title:			BYUMPA Plugin for Rcmdr
-Version:		1.0
-Date:			2012-04-19
+Version:		0.1
+Date:			2012-05-17
 Author:			Andrew Heiss
 Maintainer:		Andrew Heiss <andrew@andrewheiss.com>
 Depends:		Rcmdr (>= 1.4-0)

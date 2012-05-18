@@ -27,7 +27,7 @@
     menu    confInts    byuMenu             ""                      ""                  ""            ""
     item    byuMenu     cascade             "Confidence intervals"  confInts            ""            ""
     item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
-    item    confInts    command             "Binary..."             helloWorld          "numericP()"            ""
+    item    confInts    command             "Binary..."             confintBinomial     "numericP() || factorsP()"    ""
     item    confInts    command             "Poisson..."            confintPoisson      "numericP()"            ""
                                                                                                     
                                                                                                     

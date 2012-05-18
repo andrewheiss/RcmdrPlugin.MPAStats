@@ -39,7 +39,18 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
   }
   
   #------------------------
-  # Categorical summaries
+  # Categorical summaries TODO: Add proportions to the factors (% of total non-NA responses) 
+  # > .Table <- table(d$x4)
+  # 
+  # > .Table  # counts for x4
+  # 
+  #  1  2  3  4 
+  # 20 23 28 29 
+  # 
+  # > round(100*.Table/sum(.Table), 2)  # percentages for x4
+  # 
+  #  1  2  3  4 
+  # 20 23 28 29
   x.factors <- x[ , sapply(x, is.factor)]
   if (ncol(x.factors) > 0) {
     x.counts <- apply(x.factors, 2, summary.factor)
