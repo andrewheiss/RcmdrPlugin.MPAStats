@@ -26,9 +26,20 @@
                                                                                                     
     menu    confInts    byuMenu             ""                      ""                  ""            ""
     item    byuMenu     cascade             "Confidence intervals"  confInts            ""            ""
-    item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
-    item    confInts    command             "Binary..."             confintBinomial     "numericP() || factorsP()"    ""
-    item    confInts    command             "Poisson..."            confintPoisson      "numericP()"            ""
+    item    confInts    command             "Interval data (t-test)..." singleSampleTTest  "numericP()"   ""
+    item    confInts    command             "Binary data (proportion test)..."   singleProportionTest  "twoLevelFactorsP()"    "" 
+    # item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
+    # item    confInts    command             "Binary..."             confintBinomial     "numericP() || factorsP()"    ""
+    # item    confInts    command             "Poisson..."            confintPoisson      "numericP()"            ""
+
+
+#---------------------------
+# Single sample statistics 
+
+    menu    singleSample    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu         cascade             "Single-sample statistics"  singleSample            ""            ""
+    item    singleSample    command             "Single-sample t-test... (interval)"     singleSampleTTest  "numericP()"   ""
+    item    singleSample    command             "Single-sample proportion test... (binary)"   singleProportionTest  "twoLevelFactorsP()"    ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      
