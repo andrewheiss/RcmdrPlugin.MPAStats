@@ -19,7 +19,7 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
     colnames(results.continuous) <- c("Mean", "Std Dev", "Min", "Max", "N", "NAs")
     rownames(results.continuous) <- row.names
     
-    # Optionall add confidence interval columns  TODO: Make sure this can handle missing values
+    # Optionally add confidence interval columns  TODO: Make sure this can handle missing values
     if (conf.intervals==TRUE) { 
       calculate.confidence.intervals <- function(x, ...) {  
         temp <- t.test(x)
@@ -39,21 +39,26 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
   }
   
   #------------------------
-  # Categorical summaries TODO: Add proportions to the factors (% of total non-NA responses) 
-  # > .Table <- table(d$x4)
-  # 
-  # > .Table  # counts for x4
-  # 
-  #  1  2  3  4 
-  # 20 23 28 29 
-  # 
-  # > round(100*.Table/sum(.Table), 2)  # percentages for x4
-  # 
-  #  1  2  3  4 
-  # 20 23 28 29
+  # Categorical summaries
   x.factors <- x[ , sapply(x, is.factor)]
   if (ncol(x.factors) > 0) {
-    x.counts <- apply(x.factors, 2, summary.factor)
+    buildCountTable <- function(x) {
+      
+      Counts <- table(x, useNA="ifany")
+      
+      # Calculate the percent total for non-missing values
+      if (length(x[x==TRUE]) != 0) {
+        counts.sans.na <- table(x)
+        Percents <- round(100*counts.sans.na/sum(counts.sans.na), 2)
+        Percents <- cbind(t(Percents), "<NA>"=0)
+      } else {
+        Percents <- round(100*Counts/sum(Counts), 2)
+      }
+      
+      output <- rbind(Counts, Percents)
+      rownames(output) <- c("Counts", "Percents")
+      output
+    }
     
     lprint <- function(lst) {
       for (i in 1:length(lst)) {
@@ -62,6 +67,8 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
         cat("\n")
       }
     }
+    
+    x.counts <- lapply(x.factors, buildCountTable)
     
     if (ncol(x.continuous) > 0)
       writeLines("\n")
