@@ -40,24 +40,65 @@
     item    byuMenu         cascade             "Single-sample statistics"  singleSample            ""            ""
     item    singleSample    command             "Single-sample t-test... (interval)"     singleSampleTTest  "numericP()"   ""
     item    singleSample    command             "Single-sample proportion test... (binary)"   singleProportionTest  "twoLevelFactorsP()"    ""
+
+
+#---------------------------
+# Paired value teseting 
+
+    menu    pairedValues    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu         cascade             "Paired value testing"  pairedValues            ""            ""
+    item    pairedValues    command             "Paired t-test... (interval vars)"     pairedTTest  "numericP(2)"   ""
+    item    pairedValues    command             "Wilcoxon signed rank test... (ordinal vars)"   pairedWilcoxonTest  "numericP(2)"    ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      
 # Bivariate analysis submenu                                                                        
                                                                                                     
-    # menu    bivAnal     byuMenu             ""                      ""                  ""            ""
-    # item    byuMenu     cascade             "Bivariate analysis"    bivAnal             ""            ""
-    # item    bivAnal     command             "Something..."          helloWorld          "numericP(2)"            ""
-                                                                                                    
+    menu    bivAnal     byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Bivariate analysis"    bivAnal             ""            ""
+    # item    bivAnal     command             "Interval dependent variable"          intBivAnal          "numericP(2)"            ""
+    # item    bivAnal     command             "Ordinal dependent variable"          helloWorld          "numericP(2)"            ""
+
+    #--------------------------------
+    # Interval bivariate subsubmenu
+    menu    intBivAnal  bivAnal             ""                      ""                  ""            ""
+    item    bivAnal     cascade             "Interval dependent variable"              intBivAnal      ""            ""
+    item    intBivAnal  command             "Linear regression... (interval/ordinal ind. var.)"    linearModel     "numericP(2)"   ""
+    item    intBivAnal  command             "One-way ANOVA... (categorical ind. var.)"    oneWayAnova     "numericP() && factorsP()" "packageAvailable('multcomp') && packageAvailable('abind')"
+    item    intBivAnal  command             "Two-group t-test... (binary ind. var.)"    independentSamplesTTest     "numericP() && twoLevelFactorsP()"   ""
+    
+    #--------------------------------
+    # Ordinal bivariate subsubmenu
+    menu    ordBivAnal  bivAnal             ""                      ""                  ""            ""
+    item    bivAnal     cascade             "Ordinal dependent variable"              ordBivAnal      ""            ""
+    item    ordBivAnal  command             "Ordinal logistic regression... (interval/ordinal ind. var.)"    ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    ordBivAnal  command             "Kruskal Wallis test... (categorical ind. var.)"    KruskalWallisTest     "numericP() && factorsP()" ""
+    item    ordBivAnal  command             "Wilcoxon-Mann-Whitney test... (binary ind. var.)"    twoSampleWilcoxonTest     "numericP() && twoLevelFactorsP()"   ""
+    
+    #--------------------------------
+    # Categorical bivariate subsubmenu
+    menu    catBivAnal  bivAnal             ""                      ""                  ""            ""
+    item    bivAnal     cascade             "Categorical dependent variable"              catBivAnal      ""            ""
+    item    catBivAnal  command             "Multinomial logistic regression... (interval/ordinal ind. var.)"    multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
+    item    catBivAnal  command             "Chi-square test... (categorical/binary ind. var.)"    twoWayTable     "factorsP(2)" "packageAvailable('abind')"
+    
+    #--------------------------------
+    # Binary bivariate subsubmenu
+    menu    binBivAnal  bivAnal             ""                      ""                  ""            ""
+    item    bivAnal     cascade             "Binary dependent variable"              binBivAnal      ""            ""
+    item    binBivAnal  command             "Simple logistic regression... (interval/ordinal ind. var.)"    generalizedLinearModel      "activeDataSetP()"          ""
+    item    binBivAnal  command             "Chi-square test... (categorical ind. var.)"    twoWayTable     "factorsP(2)" "packageAvailable('abind')"
+    item    binBivAnal  command             "Proportion test... (binary ind. var.)"    twoSampleProportionsTest     "twoLevelFactorsP(2)" "packageAvailable('abind')"
                                                                                                     
 #-----------------------------                                                                      
 # Multivariate analysis submenu                                                                     
                                                                                                     
-    # menu    multAnal    byuMenu             ""                      ""                  ""            ""
-    # item    byuMenu     cascade             "Multivariate analysis" multAnal            ""            ""
-    # item    multAnal    command             "Linear regression..."  linearModel         "numericP(2)"  ""
-    # item    multAnal    command   "Ordinal logistic regression..."  helloWorld          "numericP(2)"            ""
-    # item    multAnal    command           "Logistic regression..."  helloWorld          "numericP(2)"            ""
+    menu    multAnal    byuMenu             ""                      ""                  ""            ""
+    item    byuMenu     cascade             "Multivariate analysis"       multAnal            ""            ""
+    item    multAnal    command             "Linear regression... (interval dep. var.)"  linearModel     "numericP(2)"   ""
+    item    multAnal    command             "Ordinal logistic regression... (ordinal dep. var.)"  ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    multAnal    command             "Multinomial logistic regression... (categorical dep. var.)"  multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
+    item    multAnal    command             "Logistic regression... (binary dep. var.)"  generalizedLinearModel      "activeDataSetP()"          ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      
