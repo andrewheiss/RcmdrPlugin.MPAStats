@@ -43,7 +43,7 @@
 
 
 #---------------------------
-# Paired value teseting 
+# Paired value testing 
 
     menu    pairedValues    byuMenu             ""                      ""                  ""            ""
     item    byuMenu         cascade             "Paired value testing"  pairedValues            ""            ""
@@ -71,7 +71,8 @@
     # Ordinal bivariate subsubmenu
     menu    ordBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Ordinal dependent variable"              ordBivAnal      ""            ""
-    item    ordBivAnal  command             "Ordinal logistic regression... (interval/ordinal ind. var.)"    ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    ordBivAnal  command             "Ordinal logistic regression... (ordinal library) (interval/ordinal ind. var.)"    ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
+    item    ordBivAnal  command             "Ordinal logistic regression... (MASS library) (interval/ordinal ind. var.)"    ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
     item    ordBivAnal  command             "Kruskal Wallis test... (categorical ind. var.)"    KruskalWallisTest     "numericP() && factorsP()" ""
     item    ordBivAnal  command             "Wilcoxon-Mann-Whitney test... (binary ind. var.)"    twoSampleWilcoxonTest     "numericP() && twoLevelFactorsP()"   ""
     
@@ -96,7 +97,8 @@
     menu    multAnal    byuMenu             ""                      ""                  ""            ""
     item    byuMenu     cascade             "Multivariate analysis"       multAnal            ""            ""
     item    multAnal    command             "Linear regression... (interval dep. var.)"  linearModel     "numericP(2)"   ""
-    item    multAnal    command             "Ordinal logistic regression... (ordinal dep. var.)"  ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    multAnal    command             "Ordinal logistic regression... (ordinal library) (ordinal dep. var.)"  ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
+    item    multAnal    command             "Ordinal logistic regression... (MASS library) (ordinal dep. var.)"  ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
     item    multAnal    command             "Multinomial logistic regression... (categorical dep. var.)"  multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
     item    multAnal    command             "Logistic regression... (binary dep. var.)"  generalizedLinearModel      "activeDataSetP()"          ""
                                                                                                     
