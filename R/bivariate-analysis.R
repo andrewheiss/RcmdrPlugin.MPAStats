@@ -1,3 +1,5 @@
+sclmP <- function() activeModelP() && inherits(get(ActiveModel()), 'sclm')
+
 ordinalRegressionModel.ordinal <- function(){
 	defaults <- list(initial.type="logit")
 	dialog.values <- getDialog("ordinalRegressionModel.ordinal", defaults)
@@ -87,7 +89,9 @@ ordinalRegressionModel.ordinal <- function(){
 }
 
 resetclm <- function(){
+resetclm <- function() {
 	putRcmdr("reset.model", TRUE)
 	putDialog("ordinalRegressionModel.ordinal", NULL)
 	ordinalRegressionModel.ordinal()
+}
 }

@@ -10,3 +10,4 @@ Description:  This package is an R Commander plugin that accompanies and enhance
               BYUMPA, a separate library that contains a collection of functions 
               made for public management and policy analysis statistics.
 License:      MIT
+Models: sclm
