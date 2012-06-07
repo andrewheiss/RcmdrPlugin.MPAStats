@@ -94,4 +94,8 @@ resetclm <- function() {
 	putDialog("ordinalRegressionModel.ordinal", NULL)
 	ordinalRegressionModel.ordinal()
 }
+
+factorChange <- function() {
+  .activeModel <- ActiveModel()
+  doItAndPrint(paste("exp(coef(", .activeModel, "))", sep = ""))
 }

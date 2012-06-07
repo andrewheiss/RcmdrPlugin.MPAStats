@@ -8,6 +8,10 @@
     # item    byuMenu     command             "Hello world"           helloWorld          ""            ""
     # item    byuMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
                                                                                                     
+
+#-----------------------------                                                                      
+# Additional models menu commands
+    item    modelsMenu      command         "Factor change coefficients (MPA Statistics)"      factorChange     "glmP() || sclmP()"     ""                                                                                                   
                                                                                                     
 #-----------------------------                                                                      
 # Descriptive statistics submenu                                                                    
