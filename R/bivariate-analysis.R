@@ -88,7 +88,6 @@ ordinalRegressionModel.ordinal <- function(){
 	dialogSuffix(rows=7, columns=1, focus=lhsEntry, preventDoubleClick=TRUE)
 }
 
-resetclm <- function(){
 resetclm <- function() {
 	putRcmdr("reset.model", TRUE)
 	putDialog("ordinalRegressionModel.ordinal", NULL)

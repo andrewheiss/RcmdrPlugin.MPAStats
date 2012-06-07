@@ -1,3 +1,7 @@
+summarizeDataframe <- function() {
+  doItAndPrint(paste("DataframeSummary(", ActiveDataSet(), ")", sep = ""))
+}
+
 DataframeSummary <- function(x, conf.intervals=TRUE) {
   if (class(x) != "data.frame") 
     stop("must supply a dataframe")

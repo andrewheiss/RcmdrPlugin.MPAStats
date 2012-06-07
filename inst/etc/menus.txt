@@ -3,11 +3,11 @@
 #remove  continuousMenu  "" "" "" "" ""
 
 #   type    menu/item   operation/parent    label                   command/menu        activation    install?
-    menu    byuMenu     topMenu             ""                      ""                  ""            ""
-    item    topMenu     cascade             "BYU MPA"               byuMenu             ""            ""
-    # item    byuMenu     command             "Hello world"           helloWorld          ""            ""
-    # item    byuMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
-                                                                                                    
+    menu    mpaMenu     topMenu             ""                      ""                  ""            ""
+    item    topMenu     cascade             "MPA Statistics"               mpaMenu             ""            ""
+    # item    mpaMenu     command             "Hello world"           helloWorld          ""            ""
+    # item    mpaMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
+
 
 #-----------------------------                                                                      
 # Additional models menu commands
@@ -16,8 +16,8 @@
 #-----------------------------                                                                      
 # Descriptive statistics submenu                                                                    
                                                                                                     
-    menu    descStats   byuMenu             ""                      ""                  ""            ""
-    item    byuMenu     cascade           "Descriptive statistics"  descStats           ""            ""
+    menu    descStats   mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu     cascade           "Descriptive statistics"  descStats           ""            ""
     item    descStats   command             "Summarize data set"      summarizeDataframe          "activeDataSetP()"    ""
     # item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
     # item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
@@ -28,8 +28,8 @@
 #-----------------------------                                                                      
 # Confidence intervals submenu                                                                      
                                                                                                     
-    menu    confInts    byuMenu             ""                      ""                  ""            ""
-    item    byuMenu     cascade             "Confidence intervals"  confInts            ""            ""
+    menu    confInts    mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu     cascade             "Confidence intervals"  confInts            ""            ""
     item    confInts    command             "Interval data (t-test)..." confintContinuous  "numericP()"   ""
     item    confInts    command             "Binary data (proportion test)..."   confintBinomial  "twoLevelFactorsP()"    "" 
     # item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
@@ -40,8 +40,8 @@
 #---------------------------
 # Single sample statistics 
 
-    menu    singleSample    byuMenu             ""                      ""                  ""            ""
-    item    byuMenu         cascade             "Single-sample statistics"  singleSample            ""            ""
+    menu    singleSample    mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu         cascade             "Single-sample statistics"  singleSample            ""            ""
     item    singleSample    command             "Single-sample t-test... (interval)"     singleSampleTTest  "numericP()"   ""
     item    singleSample    command             "Single-sample proportion test... (binary)"   singleProportionTest  "twoLevelFactorsP()"    ""
 
@@ -49,8 +49,8 @@
 #---------------------------
 # Paired value testing 
 
-    menu    pairedValues    byuMenu             ""                      ""                  ""            ""
-    item    byuMenu         cascade             "Paired value testing"  pairedValues            ""            ""
+    menu    pairedValues    mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu         cascade             "Paired value testing"  pairedValues            ""            ""
     item    pairedValues    command             "Paired t-test... (interval vars)"     pairedTTest  "numericP(2)"   ""
     item    pairedValues    command             "Wilcoxon signed rank test... (ordinal vars)"   pairedWilcoxonTest  "numericP(2)"    ""
                                                                                                     
@@ -58,8 +58,8 @@
 #-----------------------------                                                                      
 # Bivariate analysis submenu                                                                        
                                                                                                     
-    menu    bivAnal     byuMenu             ""                      ""                  ""            ""
-    item    byuMenu     cascade             "Bivariate analysis"    bivAnal             ""            ""
+    menu    bivAnal     mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu     cascade             "Bivariate analysis"    bivAnal             ""            ""
     # item    bivAnal     command             "Interval dependent variable"          intBivAnal          "numericP(2)"            ""
     # item    bivAnal     command             "Ordinal dependent variable"          helloWorld          "numericP(2)"            ""
 
@@ -75,8 +75,7 @@
     # Ordinal bivariate subsubmenu
     menu    ordBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Ordinal dependent variable"              ordBivAnal      ""            ""
-    item    ordBivAnal  command             "Ordinal logistic regression... (ordinal library) (interval/ordinal ind. var.)"    ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
-    item    ordBivAnal  command             "Ordinal logistic regression... (MASS library) (interval/ordinal ind. var.)"    ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    ordBivAnal  command             "Ordinal logistic regression... (interval/ordinal ind. var.)"    ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
     item    ordBivAnal  command             "Kruskal Wallis test... (categorical ind. var.)"    KruskalWallisTest     "numericP() && factorsP()" ""
     item    ordBivAnal  command             "Wilcoxon-Mann-Whitney test... (binary ind. var.)"    twoSampleWilcoxonTest     "numericP() && twoLevelFactorsP()"   ""
     
@@ -98,11 +97,10 @@
 #-----------------------------                                                                      
 # Multivariate analysis submenu                                                                     
                                                                                                     
-    menu    multAnal    byuMenu             ""                      ""                  ""            ""
-    item    byuMenu     cascade             "Multivariate analysis"       multAnal            ""            ""
+    menu    multAnal    mpaMenu             ""                      ""                  ""            ""
+    item    mpaMenu     cascade             "Multivariate analysis"       multAnal            ""            ""
     item    multAnal    command             "Linear regression... (interval dep. var.)"  linearModel     "numericP(2)"   ""
-    item    multAnal    command             "Ordinal logistic regression... (ordinal library) (ordinal dep. var.)"  ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
-    item    multAnal    command             "Ordinal logistic regression... (MASS library) (ordinal dep. var.)"  ordinalRegressionModel     "factorsP()" "packageAvailable('MASS')"
+    item    multAnal    command             "Ordinal logistic regression... (ordinal dep. var.)"  ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
     item    multAnal    command             "Multinomial logistic regression... (categorical dep. var.)"  multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
     item    multAnal    command             "Logistic regression... (binary dep. var.)"  generalizedLinearModel      "activeDataSetP()"          ""
                                                                                                     
@@ -110,8 +108,8 @@
 #-----------------------------                                                                      
 # Diagnostics submenu                                                                               
                                                                                                     
-    # menu    diagMenu    byuMenu             ""                      ""                  ""            ""
-    # item    byuMenu     cascade             "Diagnostics"           diagMenu            ""            ""
+    # menu    diagMenu    mpaMenu             ""                      ""                  ""            ""
+    # item    mpaMenu     cascade             "Diagnostics"           diagMenu            ""            ""
     # item    diagMenu    command             "Box plots..."          boxPlot             "numericP()"            ""
     # item    diagMenu    command             "Normality tests..."    helloWorld          ""            ""
     # item    diagMenu    command             "SD test..."            helloWorld          ""            ""
