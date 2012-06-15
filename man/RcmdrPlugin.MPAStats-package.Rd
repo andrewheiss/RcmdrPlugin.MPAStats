@@ -26,7 +26,7 @@ the \emph{R Commander} interface, with the following submenus:
 \strong{Paired value testing}, \strong{Bivariate analysis} (with additional submenus 
 that divide statistical tests by the level of measurement of the dependent and 
 independent variables), and \strong{Multivariate analysis}. Additionally, there is 
-a function to calculate logistic regression factor change coefficients (e^c) at 
+a function to calculate logistic regression factor change coefficients (e^b) at 
 \strong{Models -> Factor change coefficients}.
 }
 \author{
