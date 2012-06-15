@@ -19,6 +19,7 @@
     menu    descStats   mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu     cascade           "Descriptive statistics"  descStats           ""            ""
     item    descStats   command             "Summarize data set"      summarizeDataframe          "activeDataSetP()"    ""
+    item    descStats   command             "View data set structure"      checkStructure          "activeDataSetP()"    ""
     # item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
     # item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
     # item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""
@@ -106,7 +107,8 @@
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      
-# Diagnostics submenu                                                                               
+# Diagnostics submenu
+# TODO: Finish these someday
                                                                                                     
     # menu    diagMenu    mpaMenu             ""                      ""                  ""            ""
     # item    mpaMenu     cascade             "Diagnostics"           diagMenu            ""            ""

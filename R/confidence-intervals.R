@@ -1,3 +1,7 @@
+# Last modified: 2012-06-15 by Andrew Heiss
+#--------------------------------------------
+
+# Extract and pretty print the confidence interval from an object of class `htest`
 printConfint <- function(x) {
   if (class(x) != "htest") 
     stop("must supply an object of class htest")
@@ -7,6 +11,8 @@ printConfint <- function(x) {
       format(c(x$conf.int[1L], x$conf.int[2L])), "\n")
 }
 
+
+# Dialog for calculating confidence intervals for numeric data
 confintContinuous <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
   dialog.values <- getDialog ("confintContinuous", defaults)  
@@ -61,6 +67,7 @@ confintContinuous <- function () {
 }
 
 
+# Dialog for calculating confidence intervals for Poisson data
 confintPoisson <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
   dialog.values <- getDialog ("confintPoisson", defaults)  
@@ -115,6 +122,8 @@ confintPoisson <- function () {
   dialogSuffix(rows = 4, columns = 2)
 }
 
+
+# Dialog for calculating binary data
 confintBinomial <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
   dialog.values <- getDialog ("confintBinomial", defaults)  

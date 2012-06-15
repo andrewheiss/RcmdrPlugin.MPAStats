@@ -1,8 +1,5 @@
-#-------------------------------------
-# Rcmdr menus for the BYUMPA package
-# Author: Andrew Heiss
-# Last modified: 19 April 2012
-#-------------------------------------
+# Last modified: 2012-06-15 by Andrew Heiss
+#--------------------------------------------
 
 .onAttach <- function(libname, pkgname){
   if (!interactive()) return()
@@ -16,11 +13,16 @@
   }
 }
 
+# Example dialog-less menu item
+#--------------------------------
 # helloWorld <- function() {
 #   command <- paste('print("Hello world!")')
 #   doItAndPrint(command)
 # }
 # 
+
+# Example dialog
+#-----------------
 # helloWorldDialog <- function() {
 #   initializeDialog(title=gettextRcmdr("Hello World Dialog"))
 #   nameVar <- tclVar("world")

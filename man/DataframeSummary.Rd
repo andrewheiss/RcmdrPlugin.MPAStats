@@ -1,38 +1,23 @@
 \name{DataframeSummary}
 \alias{DataframeSummary}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{Dataframe Summary}
+\title{Datafram Summary}
 \description{
-  Summarize every variable in a data frame.
+  Summarize every numeric and factor column in a data frame.
 }
 \usage{
-DataframeSummary(x)
+DataframeSummary(x, conf.intervals = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{Dataframe object to be summarized.}
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{x}{dataframe object to be summarized}
+  \item{conf.intervals}{a logical indicating whether you want confidence intervals in the output}
 }
 \value{
-  A dataframe object with a row for each of the original dataframe's columns
+  Textual summary tables for numeric and factor columns in the dataframe.
 }
-% \references{
-% %% ~put references to the literature/web site here ~
-% }
 \author{
 Andrew Heiss \email{andrew@andrewheiss.com}
 }
-% \note{
-% %%  ~~further notes~~
-% }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-% \seealso{
-% %% ~~objects to See Also as \code{\link{help}}, ~~~
-% }
 \examples{
 DataframeSummary(USArrests)
 }

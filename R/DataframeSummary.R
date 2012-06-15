@@ -1,7 +1,8 @@
-summarizeDataframe <- function() {
-  doItAndPrint(paste("DataframeSummary(", ActiveDataSet(), ")", sep = ""))
-}
+# Last modified: 2012-06-15 by Andrew Heiss
+#--------------------------------------------
 
+# Output a summary table of all numeric and factor columns, 
+# with optional output for confidence intervals
 DataframeSummary <- function(x, conf.intervals=TRUE) {
   if (class(x) != "data.frame") 
     stop("must supply a dataframe")

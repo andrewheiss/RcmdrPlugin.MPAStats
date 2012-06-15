@@ -1,5 +1,11 @@
+# Last modified: 2012-06-15 by Andrew Heiss
+#--------------------------------------------
+
+# Check for objects of class `sclm`
 sclmP <- function() activeModelP() && inherits(get(ActiveModel()), 'sclm')
 
+
+# Modify the built-in `ordinalRegressionModel()` to work with `clm()` in the ordinal library
 ordinalRegressionModel.ordinal <- function(){
 	defaults <- list(initial.type="logit")
 	dialog.values <- getDialog("ordinalRegressionModel.ordinal", defaults)
@@ -88,13 +94,10 @@ ordinalRegressionModel.ordinal <- function(){
 	dialogSuffix(rows=7, columns=1, focus=lhsEntry, preventDoubleClick=TRUE)
 }
 
+
+# Reset the clm model dialog
 resetclm <- function() {
 	putRcmdr("reset.model", TRUE)
 	putDialog("ordinalRegressionModel.ordinal", NULL)
 	ordinalRegressionModel.ordinal()
-}
-
-factorChange <- function() {
-  .activeModel <- ActiveModel()
-  doItAndPrint(paste("exp(coef(", .activeModel, "))", sep = ""))
 }

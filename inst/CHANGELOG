@@ -1,4 +1,12 @@
-# RcmdrPlugin.BYUMPA Changelog
+# RcmdrPlugin.MPAStats Changelog
+
+## 1.0 -- June 14, 2012
+
+* Released for initial CRAN submission
+* Renamed RcmdrPlugin.MPAStats (formerly RcmdrPlugin.BYUMPA)
+* Added: Menu for viewing the structure of the current dataframe (MPA Statistics -> Descriptive statistics -> View data set structure)
+* Fixed: All documentation is correct. Package passes all `R CMD check` tests, with the exception of trivial "no visible binding for global variable" notes that occur in all Rcmdr plugins (and in the core Rcmdr)
+
 
 ## 0.5 -- June 7, 2012
 
