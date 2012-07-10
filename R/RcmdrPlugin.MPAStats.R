@@ -1,4 +1,4 @@
-# Last modified: 2012-06-15 by Andrew Heiss
+# Last modified: 2012-07-10 by Andrew Heiss
 #--------------------------------------------
 
 .onAttach <- function(libname, pkgname){
@@ -12,6 +12,14 @@
     Commander()
   }
 }
+
+# Run John Fox's findGlobals.R to generate this code
+if (getRversion() >= '2.15.1') globalVariables(c('top',
+'singleProportionTest', 'buttonsFrame',
+'proportionalOddsModel', 'subsetVariable', 'lhsVariable',
+'rhsVariable', 'modelTypeVariable', 'xBox',
+'outerOperatorsFrame', 'formulaFrame', 'subsetFrame',
+'modelTypeFrame', 'lhsEntry'))
 
 # Example dialog-less menu item
 #--------------------------------
