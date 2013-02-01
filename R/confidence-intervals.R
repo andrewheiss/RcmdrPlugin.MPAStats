@@ -146,9 +146,7 @@ confintBinomial <- function () {
     closeDialog()
     
     command <- paste("xtabs(~", x, ", data=", ActiveDataSet(), ")")
-		logger(paste(".Table <-", command))
-		assign(".Table", justDoIt(command), envir = .GlobalEnv)
-		doItAndPrint(".Table")
+    doItAndPrint(paste(".Table <- ", command))
 		doItAndPrint(paste(".test.bi <- binom.test(rbind(.Table), alternative='", 
 							alternative, "', p=", p, ", conf.level=", level, 
 							")", sep = ""))

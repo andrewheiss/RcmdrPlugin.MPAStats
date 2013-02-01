@@ -74,8 +74,7 @@ ordinalRegressionModel.ordinal <- function(){
 		formula <- paste(tclvalue(lhsVariable), tclvalue(rhsVariable), sep=" ~ ")
 		command <- paste("clm(", formula, ', link="', tclvalue(modelTypeVariable),
 				'", data=', .activeDataSet, subset, ")", sep="")
-		logger(paste(modelValue, " <- ", command, sep=""))
-		assign(modelValue, justDoIt(command), envir=.GlobalEnv)
+		doItAndPrint(paste(modelValue, " <- ", command, sep=""))
 		doItAndPrint(paste("summary(", modelValue, ")", sep=""))
 		activeModel(modelValue)
 		tkfocus(CommanderWindow())
