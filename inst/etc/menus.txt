@@ -6,7 +6,7 @@
     menu    mpaMenu     topMenu             ""                      ""                  ""            ""
     item    topMenu     cascade             "MPA Statistics"               mpaMenu             ""            ""
     # item    mpaMenu     command             "Hello world"           helloWorld          ""            ""
-    # item    mpaMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
+    #item    mpaMenu     command             "Hello somebody..."     helloWorldDialog    ""            ""
 
 
 #-----------------------------                                                                      
@@ -31,8 +31,8 @@
                                                                                                     
     menu    confInts    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu     cascade             "Confidence intervals"  confInts            ""            ""
-    item    confInts    command             "Interval data (t-test)..." confintContinuous  "numericP()"   ""
-    item    confInts    command             "Binary data (proportion test)..."   confintBinomial  "twoLevelFactorsP()"    "" 
+    item    confInts    command             "Interval data (t-test)..." confintContinuous2  "numericP()"   ""
+    item    confInts    command             "Binary data (proportion test)..."   confintBinomial2  "twoLevelFactorsP()"    "" 
     # item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
     # item    confInts    command             "Binary..."             confintBinomial     "numericP() || factorsP()"    ""
     # item    confInts    command             "Poisson..."            confintPoisson      "numericP()"            ""
@@ -43,8 +43,8 @@
 
     menu    singleSample    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu         cascade             "Single-sample statistics"  singleSample            ""            ""
-    item    singleSample    command             "Single-sample t-test... (interval)"     singleSampleTTest  "numericP()"   ""
-    item    singleSample    command             "Single-sample proportion test... (binary)"   singleProportionTest  "twoLevelFactorsP()"    ""
+    item    singleSample    command             "Single-sample t-test... (interval)"     singleSampleTTest2  "numericP()"   ""
+    item    singleSample    command             "Single-sample proportion test... (binary)"   singleProportionTest2  "twoLevelFactorsP()"    ""
 
 
 #---------------------------
@@ -52,8 +52,8 @@
 
     menu    pairedValues    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu         cascade             "Paired value testing"  pairedValues            ""            ""
-    item    pairedValues    command             "Paired t-test... (interval vars)"     pairedTTest  "numericP(2)"   ""
-    item    pairedValues    command             "Wilcoxon signed rank test... (ordinal vars)"   pairedWilcoxonTest  "numericP(2)"    ""
+    item    pairedValues    command             "Paired t-test... (interval vars)"     pairedTTest2  "numericP(2)"   ""
+    item    pairedValues    command             "Wilcoxon signed rank test... (ordinal vars)"   pairedWilcoxonTest2  "numericP(2)"    ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      
@@ -68,42 +68,42 @@
     # Interval bivariate subsubmenu
     menu    intBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Interval dependent variable"              intBivAnal      ""            ""
-    item    intBivAnal  command             "Linear regression... (interval/ordinal ind. var.)"    linearModel     "numericP(2)"   ""
-    item    intBivAnal  command             "One-way ANOVA... (categorical ind. var.)"    oneWayAnova     "numericP() && factorsP()" "packageAvailable('multcomp') && packageAvailable('abind')"
-    item    intBivAnal  command             "Two-group t-test... (binary ind. var.)"    independentSamplesTTest     "numericP() && twoLevelFactorsP()"   ""
+    item    intBivAnal  command             "Linear regression... (interval/ordinal ind. var.)"    linearModel2     "numericP(2)"   ""
+    item    intBivAnal  command             "One-way ANOVA... (categorical ind. var.)"    oneWayAnova2     "numericP() && factorsP()" "packageAvailable('multcomp') && packageAvailable('abind')"
+    item    intBivAnal  command             "Two-group t-test... (binary ind. var.)"    independentSamplesTTest2     "numericP() && twoLevelFactorsP()"   ""
     
     #--------------------------------
     # Ordinal bivariate subsubmenu
     menu    ordBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Ordinal dependent variable"              ordBivAnal      ""            ""
-    item    ordBivAnal  command             "Ordinal logistic regression... (interval/ordinal ind. var.)"    ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
-    item    ordBivAnal  command             "Kruskal Wallis test... (categorical ind. var.)"    KruskalWallisTest     "numericP() && factorsP()" ""
-    item    ordBivAnal  command             "Wilcoxon-Mann-Whitney test... (binary ind. var.)"    twoSampleWilcoxonTest     "numericP() && twoLevelFactorsP()"   ""
+    item    ordBivAnal  command             "Ordinal logistic regression... (interval/ordinal ind. var.)"    ordinalRegressionModelOrdinal2     "factorsP()" "packageAvailable('ordinal')"
+    item    ordBivAnal  command             "Kruskal Wallis test... (categorical ind. var.)"    KruskalWallisTest2     "numericP() && factorsP()" ""
+    item    ordBivAnal  command             "Wilcoxon-Mann-Whitney test... (binary ind. var.)"    twoSampleWilcoxonTest2     "numericP() && twoLevelFactorsP()"   ""
     
     #--------------------------------
     # Categorical bivariate subsubmenu
     menu    catBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Categorical dependent variable"              catBivAnal      ""            ""
-    item    catBivAnal  command             "Multinomial logistic regression... (interval/ordinal ind. var.)"    multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
-    item    catBivAnal  command             "Chi-square test... (categorical/binary ind. var.)"    twoWayTable     "factorsP(2)" "packageAvailable('abind')"
+#    item    catBivAnal  command             "Multinomial logistic regression... (interval/ordinal ind. var.)"    multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
+    item    catBivAnal  command             "Chi-square test... (categorical/binary ind. var.)"    twoWayTable2     "factorsP(2)" "packageAvailable('abind')"
     
     #--------------------------------
     # Binary bivariate subsubmenu
     menu    binBivAnal  bivAnal             ""                      ""                  ""            ""
     item    bivAnal     cascade             "Binary dependent variable"              binBivAnal      ""            ""
-    item    binBivAnal  command             "Simple logistic regression... (interval/ordinal ind. var.)"    generalizedLinearModel      "activeDataSetP()"          ""
-    item    binBivAnal  command             "Chi-square test... (categorical ind. var.)"    twoWayTable     "factorsP(2)" "packageAvailable('abind')"
-    item    binBivAnal  command             "Proportion test... (binary ind. var.)"    twoSampleProportionsTest     "twoLevelFactorsP(2)" "packageAvailable('abind')"
+    item    binBivAnal  command             "Simple logistic regression... (interval/ordinal ind. var.)"    generalizedLinearModel2      "activeDataSetP()"          ""
+    item    binBivAnal  command             "Chi-square test... (categorical ind. var.)"    twoWayTable2     "factorsP(2)" "packageAvailable('abind')"
+    item    binBivAnal  command             "Proportion test... (binary ind. var.)"    twoSampleProportionsTest2     "twoLevelFactorsP(2)" "packageAvailable('abind')"
                                                                                                     
 #-----------------------------                                                                      
 # Multivariate analysis submenu                                                                     
                                                                                                     
     menu    multAnal    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu     cascade             "Multivariate analysis"       multAnal            ""            ""
-    item    multAnal    command             "Linear regression... (interval dep. var.)"  linearModel     "numericP(2)"   ""
-    item    multAnal    command             "Ordinal logistic regression... (ordinal dep. var.)"  ordinalRegressionModel.ordinal     "factorsP()" "packageAvailable('ordinal')"
-    item    multAnal    command             "Multinomial logistic regression... (categorical dep. var.)"  multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
-    item    multAnal    command             "Logistic regression... (binary dep. var.)"  generalizedLinearModel      "activeDataSetP()"          ""
+    item    multAnal    command             "Linear regression... (interval dep. var.)"  linearModel2     "numericP(2)"   ""
+    item    multAnal    command             "Ordinal logistic regression... (ordinal dep. var.)"  ordinalRegressionModelOrdinal2     "factorsP()" "packageAvailable('ordinal')"
+#    item    multAnal    command             "Multinomial logistic regression... (categorical dep. var.)"  multinomialLogitModel     "factorsP()" "packageAvailable('nnet')"
+    item    multAnal    command             "Logistic regression... (binary dep. var.)"  generalizedLinearModel2      "activeDataSetP()"          ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      

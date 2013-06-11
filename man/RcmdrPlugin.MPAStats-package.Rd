@@ -15,14 +15,14 @@ Brigham Young University.
 \tabular{ll}{
 Package: \tab RcmdrPlugin.MPAStats\cr
 Type: \tab Package\cr
-Version: \tab 1.0.1\cr
-Date: \tab 2012-07-10\cr
-License: \tab MIT\cr
+Version: \tab 1.1.0\cr
+Date: \tab 2013-06-06\cr
+License: \tab GPL (>2)\cr
 }
 
 The plug-in adds an additional top-level menu named \strong{MPA Statistics} to 
 the \emph{R Commander} interface, with the following submenus: 
-\strong{Descriptive statistics"}, \strong{Single-sample statistics}, 
+\strong{Descriptive statistics}, \strong{Single-sample statistics}, 
 \strong{Paired value testing}, \strong{Bivariate analysis} (with additional submenus 
 that divide statistical tests by the level of measurement of the dependent and 
 independent variables), and \strong{Multivariate analysis}. Additionally, there is 
@@ -30,9 +30,9 @@ a function to calculate logistic regression factor change coefficients (e^b) at
 \strong{Models -> Factor change coefficients}.
 }
 \author{
-Andrew Heiss
+Andrew Heiss, Richard Payne
 
-Maintainer: Andrew Heiss <andrew@andrewheiss.com>
+Maintainer: Christa Schank <christa.schank@gmail.com>
 }
 
 \keyword{ package }

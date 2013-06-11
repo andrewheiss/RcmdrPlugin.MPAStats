@@ -1,5 +1,112 @@
-# Last modified: 2012-06-15 by Andrew Heiss
-#--------------------------------------------
+# Modified on December 7, 2012 by Richard Payne
+
+#Interpretation Function
+singleProportionTestWords <- function(varname,level,x){
+    wrapper <- function(text){
+        text2 <- strwrap(text)
+        for(i in 1:length(text2)){
+            cat(text2[i],"\n",sep="")
+        }
+    }            
+
+    pval <- x$p.value
+    null.value <- x$null.value
+    alpha <- 1-level
+
+    up.down <- paste(x$alternative," than ",sep="")
+    if(up.down == "two.sided than "){
+        up.down <- "different from "
+    }
+
+    if(pval >= alpha){
+        text <- paste("The proportion of ",varname," is not significantly ",up.down,null.value,". \n \n",sep="")
+        wrapper(text)
+    }
+
+    else if(pval < alpha){
+        text <- paste("The proportion of ",varname," in your population is significantly ",up.down,null.value," (p=",pval,"). \n \n",sep="")
+        wrapper(text)
+    }
+}
+
+#Modified singleProportionTest code from Rcmdr: R Commander
+singleProportionTest2 <- function () {
+	defaults <- list (initial.x = NULL, initial.alternative = "two.sided", initial.level = ".95", 
+			initial.test = "normal" , initial.p = ".5")
+	dialog.values <- getDialog ("singleProportionTest2", defaults)
+	initializeDialog(title = gettextRcmdr("Single-Sample Proportion Test"))
+	xBox <- variableListBox(top, TwoLevelFactors(), title = gettextRcmdr("Variable (pick one)"),
+			initialSelection = varPosn(dialog.values$initial.x,"factor"))
+	onOK <- function() {
+		x <- getSelection(xBox)
+		if (length(x) == 0) {
+			errorCondition(recall = singleProportionTest2, message = gettextRcmdr("You must select a variable."))
+			return()
+		}
+		alternative <- as.character(tclvalue(alternativeVariable))
+		level <- tclvalue(confidenceLevel)
+		test <- as.character(tclvalue(testVariable))
+		p <- tclvalue(pVariable)
+		putDialog ("singleProportionTest2", list (initial.x = x, initial.alternative = alternative, 
+						initial.level = level, initial.test = test , initial.p = p))
+		closeDialog()
+		command <- paste("xtabs(~", x, ", data=", ActiveDataSet(), 
+				")")
+		logger(paste(".Table <-", command))
+		doItAndPrint(paste(".Table","<-",command))
+		doItAndPrint(".Table")
+
+                # Added the "model <-" to each of the pastes
+		if (test == "normal") 
+			doItAndPrint(paste("model <- prop.test(rbind(.Table), alternative='", 
+							alternative, "', p=", p, ", conf.level=", level, 
+							", correct=FALSE)", sep = ""))
+		else if (test == "corrected") 
+			doItAndPrint(paste("model <- prop.test(rbind(.Table), alternative='", 
+							alternative, "', p=", p, ", conf.level=", level, 
+							", correct=TRUE)", sep = ""))
+		else doItAndPrint(paste("model <- binom.test(rbind(.Table), alternative='", 
+							alternative, "', p=", p, ", conf.level=", level, 
+							")", sep = ""))
+        doItAndPrint("model")
+        #Inserted Code
+        doItAndPrint(paste("singleProportionTestWords(",'"',x,'",',level,",model)",sep=""))
+        #End of Inserted Code
+		tkfocus(CommanderWindow())
+	}
+	OKCancelHelp(helpSubject = "prop.test", reset = "singleProportionTest2")
+	radioButtons(top, name = "alternative", buttons = c("twosided", 
+					"less", "greater"), values = c("two.sided", "less", "greater"), 
+			labels = gettextRcmdr(c("Population proportion != p0", 
+							"Population proportion < p0", "Population proportion > p0")), 
+			title = gettextRcmdr("Alternative Hypothesis"), initialValue = dialog.values$initial.alternative)
+	rightFrame <- tkframe(top)
+	confidenceFrame <- tkframe(rightFrame)
+	confidenceLevel <- tclVar(dialog.values$initial.level)
+	confidenceField <- ttkentry(confidenceFrame, width = "6", 
+			textvariable = confidenceLevel)
+	pFrame <- tkframe(rightFrame)
+	pVariable <- tclVar(dialog.values$initial.p)
+	pField <- ttkentry(pFrame, width = "6", textvariable = pVariable)
+	radioButtons(name = "test", buttons = c("normal", "corrected", 
+					"exact"), labels = gettextRcmdr(c("Normal approximation", 
+							"Normal approximation with\ncontinuity correction", "Exact binomial")), 
+			title = gettextRcmdr("Type of Test"), initialValue = dialog.values$initial.test)
+	tkgrid(getFrame(xBox), sticky = "nw")
+	tkgrid(labelRcmdr(pFrame, text = gettextRcmdr("Null hypothesis: p = "), 
+					fg = "blue"), pField, sticky = "w")
+	tkgrid(pFrame, sticky = "w")
+	tkgrid(labelRcmdr(rightFrame, text = ""))
+	tkgrid(labelRcmdr(confidenceFrame, text = gettextRcmdr("Confidence Level: "), 
+					fg = "blue"), confidenceField, sticky = "w")
+	tkgrid(confidenceFrame, sticky = "w")
+	tkgrid(alternativeFrame, rightFrame, sticky = "nw")
+	tkgrid(testFrame, sticky = "w")
+	tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
+	tkgrid.configure(confidenceField, sticky = "e")
+	dialogSuffix(rows = 4, columns = 2)
+}
+
 
 # Check for objects of class `sclm`
 sclmP <- function() activeModelP() && inherits(get(ActiveModel()), 'sclm')
@@ -100,3 +207,121 @@ resetclm <- function() {
 	putDialog("ordinalRegressionModel.ordinal", NULL)
 	ordinalRegressionModel.ordinal()
 }
+
+
+#Interpretation Function
+twoSampleProportionsTestWords <- function(x,groups,variable,table){
+    wrapper <- function(text){
+        text2 <- strwrap(text)
+        for(i in 1:length(text2)){
+            cat(text2[i],"\n",sep="")
+        }
+    }            
+    pval <- x$p.value
+    alpha <- 1-attr(x$conf.int,"conf.level")
+    conf.level <- 100*attr(x$conf.ing,"conf.level")
+    chisq <- x$statistic
+
+    grp1 <- rownames(table)[1]
+    grp2 <- rownames(table)[2]
+
+    prop1 <- x$estimate[1]
+    prop2 <- x$estimate[2]
+
+    if(pval >= alpha){
+        text <-paste("There is no significant difference in the proportion of ",variable, " between groups of ",groups,". (chi-square=",chisq,", p=",pval,")." ,sep="")
+        wrapper(text)
+    }
+
+    else if(pval < alpha){
+        text <- paste("There is a statistically significant difference in the proportion of ",variable," between groups of ",groups,". The proportion for ",grp1," was ",prop1," and the proportion of ",grp2," was ",prop2,". (chisquare=",chisq,", p=",pval,").",sep="")
+        wrapper(text)
+    }
+}
+
+#Modified twoSampleProportionsTest from Rcmdr: R Commander
+twoSampleProportionsTest2 <- function () {
+	Library("abind")
+	defaults <- list(initial.groups = NULL, initial.response = NULL, initial.alternative = "two.sided", 
+			initial.confidenceLevel = ".95", initial.test = "normal", initial.label=NULL)
+	dialog.values <- getDialog("twoSampleProportionsTest2", defaults)
+	initializeDialog(title = gettextRcmdr("Two-Sample Proportions Test"))
+	.twoLevelFactors <- TwoLevelFactors()
+	groupsBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Groups (pick one)"), 
+			initialSelection = varPosn(dialog.values$initial.groups, "twoLevelFactor"))
+	xBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Response Variable (pick one)"), 
+			initialSelection = varPosn(dialog.values$initial.response, "twoLevelFactor"))
+	onOK <- function() {
+		groups <- getSelection(groupsBox)
+		if (length(groups) == 0) {
+			errorCondition(recall = twoSampleProportionsTest2, 
+					message = gettextRcmdr("You must select a groups variable."))
+			return()
+		}
+		x <- getSelection(xBox)
+		if (length(x) == 0) {
+			errorCondition(recall = twoSampleProportionsTest2, 
+					message = gettextRcmdr("You must select a response variable."))
+			return()
+		}
+		if (x == groups) {
+			errorCondition(recall = twoSampleProportionsTest2, 
+					message = gettextRcmdr("Groups and response variables must be different."))
+			return()
+		}
+		alternative <- as.character(tclvalue(alternativeVariable))
+		level <- tclvalue(confidenceLevel)
+		test <- as.character(tclvalue(testVariable))
+		closeDialog()
+		putDialog("twoSampleProportionsTest2", list(initial.groups = groups, initial.response = x, 
+						initial.test = test, initial.alternative = alternative, initial.confidenceLevel = level,
+						initial.label=.groupsLabel))
+		command <- paste("xtabs(~", groups, "+", x, ", data=", 
+				ActiveDataSet(), ")", sep = "")
+		logger(paste(".Table <-", command))
+		doItAndPrint(paste(".Table","<-",command))
+		doItAndPrint("rowPercents(.Table)")
+		if (test == "normal") 
+
+                #Inserted "model1 <- " twice.
+			doItAndPrint(paste("model1 <- prop.test(.Table, alternative='", 
+							alternative, "', conf.level=", level, ", correct=FALSE)", 
+							sep = ""))
+		else doItAndPrint(paste("model1 <- prop.test(.Table, alternative='", 
+							alternative, "', conf.level=", level, ", correct=TRUE)", 
+							sep = ""))
+        #Inserted Code:
+        doItAndPrint("model1")
+        doItAndPrint(paste("twoSampleProportionsTestWords(model1,",'"',groups,'"',", variable=",'"',x,'"',",.Table)",sep=""))
+        #End Inserted Code
+		logger("remove(.Table)")
+		#remove(.Table, envir = .GlobalEnv)  
+		tkfocus(CommanderWindow())
+	}
+	OKCancelHelp(helpSubject = "prop.test", reset = "twoSampleProportionsTest2")
+	radioButtons(name = "alternative", buttons = c("twosided", 
+					"less", "greater"), values = c("two.sided", "less", "greater"), 
+			labels = gettextRcmdr(c("Two-sided", "Difference < 0", 
+							"Difference > 0")), initialValue = dialog.values$initial.alternative, 
+			title = gettextRcmdr("Alternative Hypothesis"))
+	rightFrame <- tkframe(top)
+	confidenceFrame <- tkframe(rightFrame)
+	confidenceLevel <- tclVar(dialog.values$initial.confidenceLevel)
+	confidenceField <- ttkentry(confidenceFrame, width = "6", 
+			textvariable = confidenceLevel)
+	radioButtons(name = "test", buttons = c("normal", "corrected"), 
+			labels = gettextRcmdr(c("Normal approximation", "Normal approximation with\ncontinuity correction")), 
+			initialValue = dialog.values$initial.test, 
+			title = gettextRcmdr("Type of Test"))
+	tkgrid(getFrame(groupsBox), getFrame(xBox), sticky = "nw")
+	groupsLabel(columnspan = 2, initialText=dialog.values$initial.label)
+	tkgrid(labelRcmdr(confidenceFrame, text = gettextRcmdr("Confidence Level: "), 
+					fg = "blue"), confidenceField, sticky = "w")
+	tkgrid(confidenceFrame, sticky = "w")
+	tkgrid(alternativeFrame, rightFrame, sticky = "nw")
+	tkgrid(testFrame, sticky = "w")
+	tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
+	tkgrid.configure(confidenceField, sticky = "e")
+	dialogSuffix(rows = 5, columns = 2)
+}
+

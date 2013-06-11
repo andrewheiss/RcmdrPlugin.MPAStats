@@ -1,6 +1,6 @@
 \name{DataframeSummary}
 \alias{DataframeSummary}
-\title{Datafram Summary}
+\title{Dataframe Summary}
 \description{
   Summarize every numeric and factor column in a data frame.
 }

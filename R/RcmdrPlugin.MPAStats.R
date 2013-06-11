@@ -1,4 +1,4 @@
-# Last modified: 2012-07-10 by Andrew Heiss
+# Last modified December 7, 2012 by Richard Payne
 #--------------------------------------------
 
 .onAttach <- function(libname, pkgname){
@@ -20,6 +20,12 @@ if (getRversion() >= '2.15.1') globalVariables(c('top',
 'rhsVariable', 'modelTypeVariable', 'xBox',
 'outerOperatorsFrame', 'formulaFrame', 'subsetFrame',
 'modelTypeFrame', 'lhsEntry'))
+
+# Addition by Richard Payne
+if (getRversion() >= '2.15.1') globalVariables(c('onHelp','alternativeVariable','variancesVariable','.groupsLabel','alternativeFrame','variancesFrame','testVariable','testFrame','percentsVariable','chisqTestVariable','chisqComponentsVariable','expFreqVariable','fisherTestVariable','.Test','.Table','percentsFrame','testsFrame'))
+
+
+
 
 # Example dialog-less menu item
 #--------------------------------

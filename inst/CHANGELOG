@@ -1,5 +1,10 @@
 # RcmdrPlugin.MPAStats Changelog
 
+## 1.1.0 -- June 6, 2013
+
+* Added: New functions to add textual interpretations of data
+* Updated: Additional functions to remove assignment of variables to the global environment (Required by R 3.0.1)
+
 ## 1.0.2 -- February 1, 2013
 
 * Updated: Minor changes to conform to updates in Rcmdr 1.9-4

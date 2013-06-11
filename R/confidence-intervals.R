@@ -1,5 +1,4 @@
-# Last modified: 2012-06-15 by Andrew Heiss
-#--------------------------------------------
+# Modified on December 7, 2012 by Richard Payne
 
 # Extract and pretty print the confidence interval from an object of class `htest`
 printConfint <- function(x) {
@@ -12,30 +11,43 @@ printConfint <- function(x) {
 }
 
 
-# Dialog for calculating confidence intervals for numeric data
-confintContinuous <- function () {
+#Interpretation Function
+confintContinuousWords <- function(x){
+     varcut<-nchar(ActiveDataSet())+2
+
+     cat("Our sample suggests that the average (mean) ",
+       tolower(substring(x$data.name,varcut))," is between"," \n ",
+       x$conf.int[1L]," and ",x$conf.int[2L], " (",
+       100*attr(x$conf.int,"conf.level"),"% confidence level). \n",sep="" )
+}     
+
+# Modified from confintContinuous function
+confintContinuous2 <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
-  dialog.values <- getDialog ("confintContinuous", defaults)  
+  dialog.values <- getDialog ("confintContinuous2", defaults)  
   initializeDialog(title = gettextRcmdr("Confidence intervals for continuous data"))
   xBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Variable (pick one)"),
                           initialSelection = varPosn(dialog.values$initial.x, "numeric"))
   onOK <- function() {
     x <- getSelection(xBox)
     if (length(x) == 0) {
-      errorCondition(recall = confintContinuous, 
+      errorCondition(recall = confintContinuous2, 
         message = gettextRcmdr("You must select a variable."))
       return()
     }
     level <- tclvalue(confidenceLevel)
-    putDialog ("confintContinuous", list (initial.x = x, initial.level = level))
+    putDialog ("confintContinuous2", list (initial.x = x, initial.level = level))
     closeDialog()
     doItAndPrint(paste(".test <- t.test(", ActiveDataSet(), "$", x, 
                        ", conf.level=", level, ")", sep = ""))
     doItAndPrint("printConfint(.test)")
+    #Insertion:
+    doItAndPrint("confintContinuousWords(.test)")
+    #End Insertion
     tkdestroy(top)
     tkfocus(CommanderWindow())
   }
-  OKCancelHelp(helpSubject = "t.test", reset = "confintContinuous")
+  OKCancelHelp(helpSubject = "t.test", reset = "confintContinuous2")
   
   # Create main frames
   leftFrame <- getFrame(xBox)
@@ -67,7 +79,7 @@ confintContinuous <- function () {
 }
 
 
-# Dialog for calculating confidence intervals for Poisson data
+# Dialog for calculating confidence intervals for Poisson data (NOT USED PRESENTLY?)
 confintPoisson <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
   dialog.values <- getDialog ("confintPoisson", defaults)  
@@ -122,11 +134,26 @@ confintPoisson <- function () {
   dialogSuffix(rows = 4, columns = 2)
 }
 
+#Interpretation Function
+confintBinomialWords <- function(level,varname,x){
+    wrapper <- function(text){
+        text2 <- strwrap(text)
+        for(i in 1:length(text2)){
+            cat(text2[i],"\n",sep="")
+        }
+    }
 
-# Dialog for calculating binary data
-confintBinomial <- function () {
+    l.limit <- x$conf.int[1]
+    u.limit <- x$conf.int[2]
+    conf.level <- 100*level
+    text <- paste("Our sample suggests that the proportion of ",varname," in the population is between ",l.limit," and ",u.limit," (",conf.level,"% confidence level, binomial corrected). \n \n",sep="")	
+    wrapper(text)
+}
+
+# Dialog for calculating binary data (modified from confintBinomial function)
+confintBinomial2 <- function () {
   defaults <- list (initial.x = NULL, initial.level = ".95")
-  dialog.values <- getDialog ("confintBinomial", defaults)  
+  dialog.values <- getDialog ("confintBinomial2", defaults)  
   initializeDialog(title = gettextRcmdr("Confidence intervals for binomial data"))
 	xBox <- variableListBox(top, TwoLevelFactors(), title = gettextRcmdr("Variable (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.x,"factor"))
@@ -141,20 +168,42 @@ confintBinomial <- function () {
     level <- tclvalue(confidenceLevel)
     alternative <- "two.sided"
     p <- .5
+    ### INSERTED CODE
+    ### assign("x",x,envir=SUB)
+    ### assign("level",level,envir=SUB)
+    ### assign("alternative",alternative,envir=SUB)
+    ### assign("p",p,envir=SUB)
+    ### END INSERTION
     
-    putDialog ("confintBinomial", list (initial.x = x, initial.level = level))
+    putDialog ("confintBinomial2", list (initial.x = x, initial.level = level))
     closeDialog()
-    
+    # Modified to interact with the SUB environment
     command <- paste("xtabs(~", x, ", data=", ActiveDataSet(), ")")
-    doItAndPrint(paste(".Table <- ", command))
+                # logger(paste(".Table <-", command))
+		### assign(".Table", justDoIt(with(environment(),command)),envir=SUB)
+		doItAndPrint(paste(".Table","<-",command))
+		### doItAndPrint("with(SUB,.Table)")
+		doItAndPrint(".Table")
+		### doItAndPrint(paste("with(SUB,.test.bi <- binom.test(rbind(.Table), alternative='", 
+		###					alternative, "', p=", 
+                ###                                        p, ", conf.level=", 
+                ###                                        level, 
+		###					"))", sep = "")) 
 		doItAndPrint(paste(".test.bi <- binom.test(rbind(.Table), alternative='", 
-							alternative, "', p=", p, ", conf.level=", level, 
-							")", sep = ""))
+							alternative, "', p=", 
+                                                        p, ", conf.level=", 
+                                                        level, 
+							")", sep = "")) 
+    ### doItAndPrint("with(SUB,printConfint(.test.bi))")
     doItAndPrint("printConfint(.test.bi)")
+    # Inserted Code
+    ### doItAndPrint(paste("with(SUB,confintBinomialWords(",level,",",'"',x,'"',",.test.bi))",sep=""))
+    doItAndPrint(paste("confintBinomialWords(",level,",",'"',x,'"',",.test.bi)",sep=""))
+    # End Insertion  
     tkdestroy(top)
     tkfocus(CommanderWindow())
   }
-  OKCancelHelp(helpSubject = "t.test", reset = "confintBinomial")
+  OKCancelHelp(helpSubject = "t.test", reset = "confintBinomial2")
   
   # Create main frames
   leftFrame <- getFrame(xBox)

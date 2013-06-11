@@ -1,10 +1,10 @@
 Package: RcmdrPlugin.MPAStats
 Type: Package
 Title: R Commander Plug-in for MPA Statistics
-Version: 1.0.2
-Date: 2013-02-01
-Author: Andrew Heiss
-Maintainer: Andrew Heiss <andrew@andrewheiss.com>
+Version: 1.1.0
+Date: 2013-05-21
+Author: Andrew Heiss, Richard Payne
+Maintainer: Christa Schank <christa.schank@gmail.com>
 Depends: Rcmdr (>= 1.4-0), ordinal
 Description: This package provides an R Commander plugin that offers a 
         unified menu of new and pre-existing statistical functions 
@@ -13,4 +13,4 @@ Description: This package provides an R Commander plugin that offers a
         in PMGT 630 in the Master of Public Administration program at
         Brigham Young University.
 RcmdrModels: sclm
-License: MIT
+License: GPL (>2)

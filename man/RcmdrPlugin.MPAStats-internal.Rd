@@ -12,4 +12,3 @@
 \description{Internal RcmdrPlugin.MPAStats objects.}
 \details{These are not to be called by the user.}
 \keyword{internal}
-
