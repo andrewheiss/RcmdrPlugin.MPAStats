@@ -1,4 +1,4 @@
-#Modified on December 7, 2012 by Richard Payne
+#Modified on June 13, 2013 by Christa Schank
 
 #Interpretiation Function
 wordsAnova <- function(x,group,response){
@@ -15,11 +15,11 @@ wordsAnova <- function(x,group,response){
     alpha <- .05
     
     if(pval >= alpha){
-       text <- paste("There is no significant difference in the mean ",response," between levels of ",group,". (F=",fstat,", p=",pval,").",sep="")
+       text <- paste("There is no significant difference in the mean ",response," between levels of ",group,". (F=",round(fstat,3),", p=",round(pval,3),").",sep="")
        wrapper(text)
     }
     else if(pval < alpha){
-        text <- paste("At least one mean ",response," among the levels of ",group," differs from the rest. (F=",fstat,",p=",pval,").",sep="")
+        text <- paste("At least one mean ",response," among the levels of ",group," differs from the rest. (F=",round(fstat,3),",p=",round(pval,3),").",sep="")
         wrapper(text)
     }
 }

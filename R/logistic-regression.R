@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation Function
 logitWords <- function(x){
@@ -68,7 +68,7 @@ logitWords <- function(x){
             cat(xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
         }
         else if(pval < alpha){
-            cat("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",exp(beta)," units. (z=",x$coefficients[i,3],", p=",x$coefficients[i,4],"). \n \n",sep="")
+            cat("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",\round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", round(p=",x$coefficients[i,4],3),"). \n \n",sep="")
         }
     }
 }

@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -29,7 +29,7 @@ singleTTestWords <- function(x){
     }
 
     text <- paste("The mean ",tolower(substring(x$data.name,varcut))
-        ," is ",.not,"significantly ",compare, x$null.value,". (t=",x$statistic," p=",x$p.value,"). \n",sep="") 
+        ," is ",.not,"significantly ",compare, x$null.value,". (t=",round(x$statistic,3)," p=",round(x$p.value,3),"). \n",sep="") 
     wrapper(text)
 }
 
@@ -129,11 +129,11 @@ pairedTTestWords=function(x){
     }
 
     if(pval >= alpha){
-        text <- paste("The mean difference of ",grp1," - ",grp2," is not significantly ",up.down,"0. (t=",t.value,", p=",pval," for a ",one.two,"-tailed test).",sep="")
+        text <- paste("The mean difference of ",grp1," - ",grp2," is not significantly ",up.down,"0. (t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test).",sep="")
         wrapper(text)
     }
     else if(pval < alpha){
-        text <- paste("It appears that the mean difference of ",grp1," - ",grp2," is ",up.down,"0. The true mean difference for ",grp1," -  ",grp2, " is likely between ",l.conf," and ",u.conf,". (",conf.level,"% confidence, t=",t.value,", p=",pval," for a ",one.two,"-tailed test). \n \n",sep="")
+        text <- paste("It appears that the mean difference of ",grp1," - ",grp2," is ",up.down,"0. The true mean difference for ",grp1," -  ",grp2, " is likely between ",round(l.conf,2)," and ",round(u.conf,2),". (",conf.level,"% confidence, t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test). \n \n",sep="")
     wrapper(text)
     }
 
@@ -230,10 +230,10 @@ independentSamplesTTestWords <- function(x){
 
     if(pval < alpha){
         text <- paste("On average, the mean ",varname," for ",grp1, " is about ",
-            difference," more than the mean ",varname," for ",grp2,
-            ". The average ",varname," among ",grp1," was about ",meangrp1,
+            round(difference,2)," more than the mean ",varname," for ",grp2,
+            ". The average ",varname," among ",grp1," was about ",round(meangrp1,2),
             ", and the average ",varname," among ",grp2," was about ",
-            meangrp2,". (t=",t.value,", p=",pval,", for a ",one.two,
+            round(meangrp2,2),". (t=",round(t.value,3),", p=",round(pval,3),", for a ",one.two,
             "-tailed test). \n \n",sep="")
         wrapper(text)
     }

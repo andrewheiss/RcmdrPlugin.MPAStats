@@ -1,4 +1,4 @@
-#Last modified on December 7, 2012 by Richard Payne
+#Last modified on June 13, 2013 by Christa Schank
 
 # Interpretation Function
 kruskalWallisWords <- function(x,group,response){
@@ -10,9 +10,9 @@ kruskalWallisWords <- function(x,group,response){
     }
 
 
-    pval <- x$p.value
+    pval <- round(x$p.value,3)
     alpha <- .05
-    statistic <- x$statistic
+    statistic <- round(x$statistic,3)
     
     if(pval >= alpha){
         text <- paste("There is no significant difference in the median ",response," between levels of ",group,". (chi-square=",statistic,", p=",pval,").",sep="")

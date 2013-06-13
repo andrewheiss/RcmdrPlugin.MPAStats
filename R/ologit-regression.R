@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 ologitWords <- function(x){
     wrapper <- function(text){
@@ -49,7 +49,7 @@ ologitWords <- function(x){
                        wrapper(text)
                    }
                    else if(pval < alpha){
-                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," the likelihood of increasing to a higher level of ",yname," by a factor of ",exp(beta),". (z=",rev.coef[j,3],", p=",rev.coef[j,4],"). \n \n",sep="")
+                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," the likelihood of increasing to a higher level of ",yname," by a factor of ",round(exp(beta),3),". (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
                        wrapper(text)
                    }
                }
@@ -80,7 +80,7 @@ ologitWords <- function(x){
             wrapper(text)
         }
         else if(pval < alpha){
-            text <- paste("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of increasing to a higher level of ",yname," ",updown," by a factor of ",exp(beta),". (z=",rev.coef[i,3],", p=",rev.coef[i,4],"). \n \n",sep="")
+            text <- paste("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of increasing to a higher level of ",yname," ",updown," by a factor of ",round(exp(beta),3),". (z=",round(rev.coef[i,3],3),", p=",round(rev.coef[i,4],3),"). \n \n",sep="")
             wrapper(text)
         }
     }
