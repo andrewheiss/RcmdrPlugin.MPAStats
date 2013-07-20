@@ -29,17 +29,17 @@ logitWords <- function(x){
                    beta <- x$coefficients[j,1]
                    if(beta >= 0){
                        sign <- "positive"
-                       updown <- "increases"
+			     moreless <- "more" #alt. updown <- "increases"
                    }
                    else if(beta < 0){
                        sign <- "negative"
-                       updown <- "decreases"
+			     moreless <- "less" #alt. updown <- "decreases"
                    }
                    if(pval >= alpha){
                        cat(factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
                    }
                    else if(pval < alpha){
-                       cat("Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," the likelihood of ",yname," by a factor of ",exp(beta),". (z=",x$coefficients[j,3],", p=",x$coefficients[j,4],"). \n \n",sep="")
+                       cat("Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to occur. (z=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
                    } 
                }
             }

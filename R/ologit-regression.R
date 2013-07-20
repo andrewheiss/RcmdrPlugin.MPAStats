@@ -38,18 +38,18 @@ ologitWords <- function(x){
                    beta <- rev.coef[j,1]
                    if(beta >= 0){
                        sign <- "positive"
-                       updown <- "increases"
+                       moreless <- "more" #alt. updown <- "increases"
                    }
                    else if(beta < 0){
                        sign <- "negative"
-                       updown <- "decreases"
+                       moreless <- "less" #alt. updown <- "decreases"
                    }
                    if(pval >= alpha){
                        text <- paste(factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
                        wrapper(text)
                    }
                    else if(pval < alpha){
-                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," the likelihood of increasing to a higher level of ",yname," by a factor of ",round(exp(beta),3),". (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
+                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,","yname," is ",round(exp(beta),3),moreless," likely to increase to a higher level. (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
                        wrapper(text)
                    }
                }
