@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on August 22, 2013 by Christa Schank
 
 #Interpretation Function
 singleProportionTestWords <- function(varname,level,x){
@@ -11,7 +11,7 @@ singleProportionTestWords <- function(varname,level,x){
 
     pval <- x$p.value
     null.value <- x$null.value
-    alpha <- 1-level
+    alpha <- 1-level 
 
     up.down <- paste(x$alternative," than ",sep="")
     if(up.down == "two.sided than "){
@@ -229,12 +229,12 @@ twoSampleProportionsTestWords <- function(x,groups,variable,table){
     prop2 <- x$estimate[2]
 
     if(pval >= alpha){
-        text <-paste("There is no significant difference in the proportion of ",variable, " between groups of ",groups,". (chi-square=",chisq,", p=",pval,")." ,sep="")
+        text <-paste("There is no significant difference in the proportion of ",variable, " between groups of ",groups,". (chi-square=",round(chisq,2),", p=",round(pval,3),")." ,sep="")
         wrapper(text)
     }
 
     else if(pval < alpha){
-        text <- paste("There is a statistically significant difference in the proportion of ",variable," between groups of ",groups,". The proportion for ",grp1," was ",prop1," and the proportion of ",grp2," was ",prop2,". (chisquare=",chisq,", p=",pval,").",sep="")
+        text <- paste("There is a statistically significant difference in the proportion of ",variable," between groups of ",groups,". The proportion for ",grp1," was ",prop1," and the proportion of ",grp2," was ",prop2,". (chisquare=",round(chisq,2),", p=",round(pval,3),").",sep="")
         wrapper(text)
     }
 }

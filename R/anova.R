@@ -1,6 +1,6 @@
 #Modified on June 13, 2013 by Christa Schank
 
-#Interpretiation Function
+#Interpretation Function
 wordsAnova <- function(x,group,response){
     #Word-wrap function
     wrapper <- function(text){

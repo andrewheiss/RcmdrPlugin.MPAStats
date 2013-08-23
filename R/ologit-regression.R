@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on July 19, 2013 by Christa Schank
 
 ologitWords <- function(x){
     wrapper <- function(text){

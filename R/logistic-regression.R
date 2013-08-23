@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on July 19, 2013 by Christa Schank
 
 # Interpretation Function
 logitWords <- function(x){
@@ -15,7 +15,7 @@ logitWords <- function(x){
             counter=counter+1
         }
     }
-    # Interpretiation of coefficients if they are factors
+    # Interpretation of coefficients if they are factors
     if(is.na(varnames[1]) == "FALSE"){
     counter <- 1
     factor.coef <- NA
@@ -68,7 +68,7 @@ logitWords <- function(x){
             cat(xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
         }
         else if(pval < alpha){
-            cat("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",\round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", round(p=",x$coefficients[i,4],3),"). \n \n",sep="")
+            cat("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
         }
     }
 }
