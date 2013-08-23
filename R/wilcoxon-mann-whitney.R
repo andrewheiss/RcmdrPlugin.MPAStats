@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation function
 wilcoxonMannWhitneyWords <- function(x,group,response){
@@ -14,11 +14,11 @@ wilcoxonMannWhitneyWords <- function(x,group,response){
     statistic <- x$statistic
 
     if(pval >= alpha){
-        text <- paste("There is no significant difference in the median ",response," between the two levels of ",group,". (W=",statistic,", p=",pval,").",sep="")
+        text <- paste("There is no significant difference in the median ",response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
         wrapper(text)
     }
     else if(pval < alpha){
-        text <- paste("There is a significant difference in the median ", response," between the two levels of ",group,". (W=",statistic,", p=",pval,").",sep="")
+        text <- paste("There is a significant difference in the median ", response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
         wrapper(text)
     }
 }

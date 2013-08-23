@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation function
 wilcoxonWords <- function(x,var1,var2){
@@ -19,12 +19,12 @@ wilcoxonWords <- function(x,var1,var2){
     Wstat <- x$statistic
 
     if(pval >= alpha){
-        text <- paste("There is insufficient evidence to conclude that the true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",Wstat,", p=",pval,").",sep="")
+        text <- paste("There is insufficient evidence to conclude that the true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
         wrapper(text)
     }
 
     else if(pval < alpha){
-        text <- paste("The true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",Wstat,", p=",pval,").",sep="")
+        text <- paste("The true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
         wrapper(text)
     }    
 }

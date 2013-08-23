@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 #Interpretation Function
 singleProportionTestWords <- function(varname,level,x){
@@ -24,7 +24,7 @@ singleProportionTestWords <- function(varname,level,x){
     }
 
     else if(pval < alpha){
-        text <- paste("The proportion of ",varname," in your population is significantly ",up.down,null.value," (p=",pval,"). \n \n",sep="")
+        text <- paste("The proportion of ",varname," in your population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
         wrapper(text)
     }
 }
@@ -217,10 +217,10 @@ twoSampleProportionsTestWords <- function(x,groups,variable,table){
             cat(text2[i],"\n",sep="")
         }
     }            
-    pval <- x$p.value
+    pval <- round(x$p.value,2)
     alpha <- 1-attr(x$conf.int,"conf.level")
     conf.level <- 100*attr(x$conf.ing,"conf.level")
-    chisq <- x$statistic
+    chisq <- round(x$statistic,2)
 
     grp1 <- rownames(table)[1]
     grp2 <- rownames(table)[2]

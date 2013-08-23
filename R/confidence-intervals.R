@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Extract and pretty print the confidence interval from an object of class `htest`
 printConfint <- function(x) {
@@ -17,7 +17,7 @@ confintContinuousWords <- function(x){
 
      cat("Our sample suggests that the average (mean) ",
        tolower(substring(x$data.name,varcut))," is between"," \n ",
-       x$conf.int[1L]," and ",x$conf.int[2L], " (",
+       round(x$conf.int[1L],2)," and ",round(x$conf.int[2L],2), " (",
        100*attr(x$conf.int,"conf.level"),"% confidence level). \n",sep="" )
 }     
 
