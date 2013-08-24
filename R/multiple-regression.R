@@ -93,7 +93,7 @@ multipleRegressionWords <- function(x){
         } 
     }
     # Interpret R-squared
-    text <- paste("The R-squared value of "round(,x$r.squared,3)," (adjusted r-squared =",round(x$adj.r.squared,3),") indicates that ",100*round(x$r.squared,3)," percent of the variation in ",yname," can be explained by the variables in this model. \n \n",sep="")
+    text <- paste("The R-squared value of ", round(,x$r.squared,3)," (adjusted r-squared =",round(x$adj.r.squared,3),") indicates that ",100*round(x$r.squared,3)," percent of the variation in ",yname," can be explained by the variables in this model. \n \n",sep="")
     wrapper(text)
 }
 
