@@ -1,7 +1,7 @@
 Package: RcmdrPlugin.MPAStats
 Type: Package
 Title: R Commander Plug-in for MPA Statistics
-Version: 1.1.0
+Version: 1.1.2
 Date: 2013-08-23
 Author: Andrew Heiss, Richard Payne, Christa Schank
 Maintainer: Andrew Heiss <andrew@andrewheiss.com>

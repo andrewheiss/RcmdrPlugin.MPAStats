@@ -1,5 +1,14 @@
 # RcmdrPlugin.MPAStats Changelog
 
+## 1.1.2 -- August 23, 2013
+
+* Updated: Minor chages to conform to updates in Rcmdr 2.0
+  * Removed `import(tcltk)` from NAMESPACE since Rcmdr does that automatically.
+
+## 1.1.1 -- June 13, 2013
+
+* Updated: Rounded all numeric output in interpretative text to 2 or 3 decimals.
+
 ## 1.1.0 -- June 6, 2013
 
 * Added: New functions to add textual interpretations of data
