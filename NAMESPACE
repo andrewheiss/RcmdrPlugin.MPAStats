@@ -1,2 +1,2 @@
-import(stats)
+import(stats, ordinal, Rcmdr)
 exportPattern("^[[:alpha:]]+")
