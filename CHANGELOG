@@ -1,1 +1,3 @@
 inst/CHANGELOG
+
+#June 13, 2013- Rounded all numeric output in interpretative text to 2 or 3 decimals.

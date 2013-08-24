@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation Functions
 chiSquareWords <- function(x,var1,var2){
@@ -17,7 +17,7 @@ chiSquareWords <- function(x,var1,var2){
         wrapper(text)
     }
     else if(pval < alpha){
-        text <- paste("There is a statistically significant association between ",var1," and ",var2,". (chi-square = ",x$statistic," p=",pval,").",sep="")
+        text <- paste("There is a statistically significant association between ",var1," and ",var2,". (chi-square = ",round(x$statistic,3)," p=",round(pval,3),").",sep="")
         wrapper(text)
     }
 }

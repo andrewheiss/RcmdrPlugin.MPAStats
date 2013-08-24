@@ -1,4 +1,4 @@
-# Modified on December 7, 2012 by Richard Payne
+# Modified on June 13, 2013 by Christa Schank
 
 # Interpretation function
 multipleRegressionWords <- function(x){
@@ -55,7 +55,7 @@ multipleRegressionWords <- function(x){
                        wrapper(text)
                    }
                    else if(pval < alpha){
-                       text <- paste("Holding all other variables constant, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," ",yname," by ",abs(beta)," units (t=",x$coefficients[j,3],", p=",x$coefficients[j,4],"). \n \n",sep="")
+                       text <- paste("Holding all other variables constant, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," ",yname," by ",round(abs(beta),3)," units (t=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
                        wrapper(text)
                    } 
                }
@@ -88,12 +88,12 @@ multipleRegressionWords <- function(x){
             wrapper(text)
         }
         else if(pval < alpha){
-            text <- paste("Holding all other variables constant, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", ",yname," ",updown," by ",abs(beta)," units. (t=",x$coefficients[i,3],", p=",x$coefficients[i,4],"). \n \n",sep="")
+            text <- paste("Holding all other variables constant, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", ",yname," ",updown," by ",round(abs(beta),3)," units. (t=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
             wrapper(text)
         } 
     }
     # Interpret R-squared
-    text <- paste("The R-squared value of ",x$r.squared," (adjusted r-squared =",x$adj.r.squared,") indicates that ",100*x$r.squared," percent of the variation in ",yname," can be explained by the variables in this model. \n \n",sep="")
+    text <- paste("The R-squared value of "round(,x$r.squared,3)," (adjusted r-squared =",round(x$adj.r.squared,3),") indicates that ",100*round(x$r.squared,3)," percent of the variation in ",yname," can be explained by the variables in this model. \n \n",sep="")
     wrapper(text)
 }
 
