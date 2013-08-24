@@ -116,7 +116,6 @@ sclmP <- function() activeModelP() && inherits(get(ActiveModel()), 'sclm')
 ordinalRegressionModel.ordinal <- function(){
 	defaults <- list(initial.type="logit")
 	dialog.values <- getDialog("ordinalRegressionModel.ordinal", defaults)
-	require("ordinal")
 	initializeDialog(title=gettextRcmdr("Ordinal Logisitic Regression Model"))
 	.activeModel <- ActiveModel()
 	.activeDataSet <- ActiveDataSet()

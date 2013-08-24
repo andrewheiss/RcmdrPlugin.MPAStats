@@ -90,7 +90,6 @@ ologitWords <- function(x){
 ordinalRegressionModelOrdinal2 <- function(){
 	defaults <- list(initial.type="logit")
 	dialog.values <- getDialog("ordinalRegressionModelOrdinal2", defaults)
-	require("ordinal")
 	initializeDialog(title=gettextRcmdr("Ordinal Logisitic Regression Model"))
 	.activeModel <- ActiveModel()
 	.activeDataSet <- ActiveDataSet()
