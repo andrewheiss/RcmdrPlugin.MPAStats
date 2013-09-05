@@ -49,7 +49,7 @@ ologitWords <- function(x){
                        wrapper(text)
                    }
                    else if(pval < alpha){
-                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,","yname," is ",round(exp(beta),3),moreless," likely to increase to a higher level. (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
+                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to increase to a higher level. (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
                        wrapper(text)
                    }
                }
