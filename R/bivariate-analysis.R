@@ -1,7 +1,8 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on September 4, 2013 by Christa Schank
 
 #Interpretation Function
-singleProportionTestWords <- function(varname,level,x){
+#dat.factor represents the vector of factor data we are testing
+singleProportionTestWords <- function(dat.factor,level,x){
     wrapper <- function(text){
         text2 <- strwrap(text)
         for(i in 1:length(text2)){
@@ -12,6 +13,8 @@ singleProportionTestWords <- function(varname,level,x){
     pval <- x$p.value
     null.value <- x$null.value
     alpha <- 1-level
+    #var defined 9/2/13
+		var<-levels(dat.factor)[1]
 
     up.down <- paste(x$alternative," than ",sep="")
     if(up.down == "two.sided than "){
@@ -19,12 +22,12 @@ singleProportionTestWords <- function(varname,level,x){
     }
 
     if(pval >= alpha){
-        text <- paste("The proportion of ",varname," is not significantly ",up.down,null.value,". \n \n",sep="")
+        text <- paste("The proportion of ",var," in the population is not significantly ",up.down,null.value,". \n \n",sep="")
         wrapper(text)
     }
 
     else if(pval < alpha){
-        text <- paste("The proportion of ",varname," in your population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
+        text <- paste("The proportion of ",var," in the population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
         wrapper(text)
     }
 }
@@ -70,7 +73,7 @@ singleProportionTest2 <- function () {
 							")", sep = ""))
         doItAndPrint("model")
         #Inserted Code
-        doItAndPrint(paste("singleProportionTestWords(",'"',x,'",',level,",model)",sep=""))
+        doItAndPrint(paste("singleProportionTestWords(dat.factor,",x,'",',level,",model)",sep=""))
         #End of Inserted Code
 		tkfocus(CommanderWindow())
 	}
