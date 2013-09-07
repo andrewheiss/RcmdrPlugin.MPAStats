@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on August 22, 2013 by Christa Schank
 
 # Interpretation function
 multipleRegressionWords <- function(x){
@@ -92,9 +92,24 @@ multipleRegressionWords <- function(x){
             wrapper(text)
         } 
     }
-    # Interpret R-squared
-    text <- paste("The R-squared value of ", round(x$r.squared,3)," (adjusted r-squared =",round(x$adj.r.squared,3),") indicates that ",100*round(x$r.squared,3)," percent of the variation in ",yname," can be explained by the variables in this model. \n \n",sep="")
+    # Interpret Model/R-squared
+    text<-paste("The R-squared value of ",round(x$r.squared,3)," (adjusted R-squared = ",round(x$adj.r.squared,3),") indicates that this formula explains about ",round(x$r.squared,3)*100," percent of the variation in ",yname,", based on results from the current data. \n
+      To predict individual values of ",yname," based on the regression line, enter the appropriate values for each dependent variable into the formula below.
+      Predictions may be under- or over-estimates of the actual value of ",yname,". \n \n",sep="")
     wrapper(text)
+
+    coeff<-round(x$coef[,1],3)
+    xx<-coeff[-1]
+    stri<-paste(yname,"=",coeff[1])
+    for (i in 1:length(xx)){
+    if(xx[i]>0){
+    stri<-cat(stri,"+")
+        }
+     stri<-cat(stri,xx[i],"*",names[i+1])
+  if(i==length(xx)){
+    stri<-cat(stri,"\n")
+        }
+    }
 }
 
 # Modified linearModel function in Rcmdr: R Commander
