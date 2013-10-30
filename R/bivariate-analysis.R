@@ -56,6 +56,7 @@ singleProportionTest2 <- function () {
 				")")
 		logger(paste(".Table <-", command))
 		doItAndPrint(paste(".Table","<-",command))
+		doItAndPrint(".Table")
     #Creates (and prints) the matrix "ntable" which has the levels and counts of the variable 
 		doItAndPrint(paste("ntable<-(rbind(.Table))"))
     #varname takes the 1st column name (or 1st level) 
