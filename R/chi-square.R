@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on November 26, 2013 by Jordan Gressel
 
 # Interpretation Functions
 chiSquareWords <- function(x,var1,var2){
@@ -8,17 +8,24 @@ chiSquareWords <- function(x,var1,var2){
             cat(text2[i],"\n",sep="")
         }
     }
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether there is an association between categorical variables ",var1," and ",var2,".
+                   \n The test assumes that observations are independent, and all expected counts exceed 10 ((row_total x column_total)/table_total >= 10).
+                    \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
 
     pval <- x$p.value
     alpha <- .05 
 
+    # text1 is the test results
     if(pval >= alpha){
-        text <- paste("There is no statistical association between ",var1," and ",var2,". \n \n",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is no statistical association between ",var1," and ",var2,". \n \n",sep="")
+        wrapper(text1)
     }
     else if(pval < alpha){
-        text <- paste("There is a statistically significant association between ",var1," and ",var2,". (chi-square = ",round(x$statistic,3)," p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is a statistically significant association between ",var1," and ",var2,". (chi-square = ",round(x$statistic,3)," p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
 }
 

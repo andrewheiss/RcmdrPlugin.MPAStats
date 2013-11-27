@@ -1,4 +1,4 @@
-# Modified on July 19, 2013 by Christa Schank
+# Modified on November 27, 2013 by Jordan Gressel
 
 ologitWords <- function(x){
     wrapper <- function(text){
@@ -24,6 +24,11 @@ ologitWords <- function(x){
             counter=counter+1
         }
     }
+    # text is the test assumption
+    text <- paste("Test Information: This test determines for each independent variable in the model whether that variable is a predicts a significant amount of the variance in ",yname,", all other variables held constant.
+                   \n The test assumes proportional odds (the relationship between any pair of groups is the same as any other pair).
+                  \n \n",sep="")
+    wrapper(text)
     # Interpretations of coefficients that are factors
     if(is.na(varnames[1]) == "FALSE"){
         counter <- 1
@@ -45,12 +50,12 @@ ologitWords <- function(x){
                        moreless <- "less" #alt. updown <- "decreases"
                    }
                    if(pval >= alpha){
-                       text <- paste(factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
-                       wrapper(text)
+                       text1 <- paste("Test Results: ",factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
+                       wrapper(text1)
                    }
                    else if(pval < alpha){
-                       text <- paste("Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to increase to a higher level. (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
-                       wrapper(text)
+                       text1 <- paste("Test Results: Controlling for all other variables in the model, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to increase to a higher level. (z=",round(rev.coef[j,3],3),", p=",round(rev.coef[j,4],3),"). \n \n",sep="")
+                       wrapper(text1)
                    }
                }
             }
@@ -76,12 +81,12 @@ ologitWords <- function(x){
             updown <- "decreases"
         }
         if(pval >=  alpha){
-            text <- paste(xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
-            wrapper(text)
+            text2 <- paste("Test Results: ",xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
+            wrapper(text2)
         }
         else if(pval < alpha){
-            text <- paste("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of increasing to a higher level of ",yname," ",updown," by a factor of ",round(exp(beta),3),". (z=",round(rev.coef[i,3],3),", p=",round(rev.coef[i,4],3),"). \n \n",sep="")
-            wrapper(text)
+            text2 <- paste("Test Results: Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of increasing to a higher level of ",yname," ",updown," by a factor of ",round(exp(beta),3),". (z=",round(rev.coef[i,3],3),", p=",round(rev.coef[i,4],3),"). \n \n",sep="")
+            wrapper(text2)
         }
     }
 }

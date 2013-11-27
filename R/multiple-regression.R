@@ -51,11 +51,11 @@ multipleRegressionWords <- function(x){
                    }
                    if(pval >= alpha){
                        factorname <- Capitalize(factorname)
-                       text <- paste(factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
+                       text <- paste("Test Results: ",factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
                        wrapper(text)
                    }
                    else if(pval < alpha){
-                       text <- paste("Holding all other variables constant, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," ",yname," by ",round(abs(beta),3)," units (t=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
+                       text <- paste("Test Results: Holding all other variables constant, ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, being ", factorname," ",updown," ",yname," by ",round(abs(beta),3)," units (t=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
                        wrapper(text)
                    } 
                }
@@ -82,21 +82,27 @@ multipleRegressionWords <- function(x){
             sign <- "negative"
             updown <- "decreases"
         }
+        # text is the test assumption
+        text <- paste("Test Information: This test determines whether each independent variable predicts variation in ",yname,", all other variables held constant.
+                   \n The test assumes that ",yname," is normally distributed with equal variance across all values of any independent variable. Each independent variable must have a linear relationship with ",yname,".
+                  \r ****************************************************************
+                  \n \n",sep="")
+        wrapper(text)
         if(pval >=  alpha){
             xname <- Capitalize(xname)
-            text <- paste(xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="") 
-            wrapper(text)
+            text1 <- paste("Test Results: ",xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="") 
+            wrapper(text1)
         }
         else if(pval < alpha){
-            text <- paste("Holding all other variables constant, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", ",yname," ",updown," by ",round(abs(beta),3)," units. (t=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
-            wrapper(text)
+            text1 <- paste("Test Results: Holding all other variables constant, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", ",yname," ",updown," by ",round(abs(beta),3)," units. (t=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
+            wrapper(text1)
         } 
     }
     # Interpret Model/R-squared
-    text<-paste("The R-squared value of ",round(x$r.squared,3)," (adjusted R-squared = ",round(x$adj.r.squared,3),") indicates that this formula explains about ",round(x$r.squared,3)*100," percent of the variation in ",yname,", based on results from the current data. \n
+    text2<-paste("The R-squared value of ",round(x$r.squared,3)," (adjusted R-squared = ",round(x$adj.r.squared,3),") indicates that this formula explains about ",round(x$r.squared,3)*100," percent of the variation in ",yname,", based on results from the current data. \n
       To predict individual values of ",yname," based on the regression line, enter the appropriate values for each dependent variable into the formula below.
       Predictions may be under- or over-estimates of the actual value of ",yname,". \n \n",sep="")
-    wrapper(text)
+    wrapper(text2)
 
     coeff<-round(x$coef[,1],3)
     xx<-coeff[-1]

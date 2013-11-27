@@ -1,4 +1,4 @@
-# Modified on July 19, 2013 by Christa Schank
+# Modified on November 27, 2013 by Jordan Gressel
 
 # Interpretation Function
 logitWords <- function(x){
@@ -15,6 +15,14 @@ logitWords <- function(x){
             counter=counter+1
         }
     }
+    # Test Assumption
+    cat("Test Information: This test determines whether each independent variable predicts variation in ",yname,", all other variables held constant.
+                   \n The test assumes that observations are independent, and that the model contains the appropriate set of variables.
+                    \r ****************************************************************
+                    \n",sep="")
+    
+    
+    
     # Interpretation of coefficients if they are factors
     if(is.na(varnames[1]) == "FALSE"){
     counter <- 1
@@ -36,10 +44,10 @@ logitWords <- function(x){
 			     moreless <- "less" #alt. updown <- "decreases"
                    }
                    if(pval >= alpha){
-                       cat(factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
+                       cat("Test Results: ",factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
                    }
                    else if(pval < alpha){
-                       cat("Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to occur. (z=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
+                       cat("Test Results: Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to occur. (z=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
                    } 
                }
             }
@@ -65,10 +73,10 @@ logitWords <- function(x){
             updown <- "decreases"
         }
         if(pval >=  alpha){
-            cat(xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
+            cat("Test Results ",xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
         }
         else if(pval < alpha){
-            cat("Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
+            cat("Test Results: Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
         }
     }
 }

@@ -1,4 +1,4 @@
-# Modified on October 17, 2013 by Jordan Gressel
+# Modified on November 19, 2013 by Jordan Gressel
 
 #Interpretation Function
 #dat.factor represents the vector of factor data we are testing
@@ -8,7 +8,7 @@ singleProportionTestWords <- function(varname,level,x){
         for(i in 1:length(text2)){
             cat(text2[i],"\n",sep="")
         }
-    }            
+    } 
 
     pval <- x$p.value
     null.value <- x$null.value
@@ -18,15 +18,25 @@ singleProportionTestWords <- function(varname,level,x){
     if(up.down == "two.sided than "){
         up.down <- "different from "
     }
-
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether the true proportion of ",varname," in the population is significantly ",up.down,null.value,".
+                   \n The test assumes that data are randomly and independently sampled. Furthermore,
+                    \r -The sample must include at least 30 observations (n >= 30)
+                    \r -The size of the population must be at least ten times as large as the sample size (N >= 10n)
+                    \r -The sample must include at least 5 successes and 5 failures (n * p >= 5 and n * (1-p) >= 5).
+                    \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
+    
+    # text1 is the test results
     if(pval >= alpha){
-        text <- paste("The proportion of ",varname," in the population is not significantly ",up.down,null.value,". \n \n",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results:The proportion of ",varname," in the population is not significantly ",up.down,null.value,". \n \n",sep="")
+        wrapper(text1)
     }
 
     else if(pval < alpha){
-        text <- paste("The proportion of ",varname," in the population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results:The proportion of ",varname," in the population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
+        wrapper(text1)
     }
 }
 
@@ -232,15 +242,25 @@ twoSampleProportionsTestWords <- function(x,groups,varname,table){
 
     prop1 <- x$estimate[1]
     prop2 <- x$estimate[2]
+    
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether there is a difference in the true proportion of ",varname," between levels of ",groups," in the population.
+        \n The test assumes that data are randomly and independently sampled. Furthermore, for each sample,
+        \r -The sample must include at least 30 observations (n >= 30)
+        \r -The size of the population must be at least ten times as large as the sample size (N >= 10n)
+        \r -The sample must include at least 5 successes and 5 failures (n * p >= 5 and n * (1-p) >= 5).
+        \r ****************************************************************
+      \n \n",sep="")
+    wrapper(text)
 
     if(pval >= alpha){
-        text <-paste("There is no significant difference in the proportion of ",varname, " between groups of ",groups,". (chi-square=",round(chisq,2),", p=",round(pval,3),")." ,sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is no significant difference in the proportion of ",varname, " between groups of ",groups,". (chi-square=",round(chisq,2),", p=",round(pval,3),")." ,sep="")
+        wrapper(text1)
     }
 
     else if(pval < alpha){
-        text <- paste("There is a statistically significant difference in the proportion of ",varname," between groups of ",groups,". The proportion for ",grp1," was ",prop1," and the proportion of ",grp2," was ",prop2,". (chisquare=",round(chisq,2),", p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is a statistically significant difference in the proportion of ",varname," between groups of ",groups,". The proportion for ",grp1," was ",prop1," and the proportion of ",grp2," was ",prop2,". (chisquare=",round(chisq,2),", p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
 }
 
