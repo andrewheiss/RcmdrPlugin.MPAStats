@@ -22,7 +22,7 @@ if (getRversion() >= '2.15.1') globalVariables(c('top',
 'modelTypeFrame', 'lhsEntry'))
 
 # Addition by Richard Payne
-if (getRversion() >= '2.15.1') globalVariables(c('onHelp','alternativeVariable','variancesVariable','.groupsLabel','alternativeFrame','variancesFrame','testVariable','testFrame','percentsVariable','chisqTestVariable','chisqComponentsVariable','expFreqVariable','fisherTestVariable','.Test','.Table','percentsFrame','testsFrame'))
+if (getRversion() >= '2.15.1') globalVariables(c('onHelp','alternativeVariable','variancesVariable','.groupsLabel','alternativeFrame','variancesFrame','testVariable','testFrame','percentsVariable','chisqTestVariable','chisqComponentsVariable','expFreqVariable','fisherTestVariable','.Test','.Table','percentsFrame','testsFrame', 'ntable'))
 
 
 
