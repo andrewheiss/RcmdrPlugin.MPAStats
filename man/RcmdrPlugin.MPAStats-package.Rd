@@ -15,8 +15,8 @@ Brigham Young University.
 \tabular{ll}{
 Package: \tab RcmdrPlugin.MPAStats\cr
 Type: \tab Package\cr
-Version: \tab 1.1.2\cr
-Date: \tab 2013-08-23\cr
+Version: \tab 1.1.4\cr
+Date: \tab 2014-01-05\cr
 License: \tab GPL (>2)\cr
 }
 
