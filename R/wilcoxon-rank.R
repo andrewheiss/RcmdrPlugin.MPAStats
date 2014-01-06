@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on November 27, 2013 by Jordan Gressel
 
 # Interpretation function
 wilcoxonWords <- function(x,var1,var2){
@@ -17,15 +17,23 @@ wilcoxonWords <- function(x,var1,var2){
     }
     null <- x$null.value
     Wstat <- x$statistic
+    
+    # text is the test assumption
+    text <- paste("Test Information: This test determines the median distance between ",var1," and ",var2," in the population, where ",var1," and ",var2," are organized into connected pairs; that is,  whether the true mean population difference ",var1," - ",var2," is ",alternative,null,".
+                  \n The test assumes that data are ordinal and paired. They are chosen randomly and independently from the same population. Differences are distributed symmetrically.
+                   \r ****************************************************************
+                  \n \n",sep="")
+    wrapper(text)
+    
 
     if(pval >= alpha){
-        text <- paste("There is insufficient evidence to conclude that the true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is insufficient evidence to conclude that the true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
 
     else if(pval < alpha){
-        text <- paste("The true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: The true median paired distance between ",var1," and ",var2," is ",alternative,null,". (W=",round(Wstat,3),", p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }    
 }
 

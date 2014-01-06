@@ -1,4 +1,4 @@
-#Last modified on June 13, 2013 by Christa Schank
+#Last modified on November 26, 2013 by Jordan Gressel
 
 # Interpretation Function
 kruskalWallisWords <- function(x,group,response){
@@ -14,13 +14,21 @@ kruskalWallisWords <- function(x,group,response){
     alpha <- .05
     statistic <- round(x$statistic,3)
     
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether any level of ",group," affects ",response,"; that is, whether the true median ",response," levels of ",group," are all equivalent to each other, or if the median ",response," of at least one level of ",group," is significantly different from the others.
+                   \n The test assumes that observations are independent and all samples come from populations with the same-shaped distribution.
+                    \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
+    
+    # text1 is the test results
     if(pval >= alpha){
-        text <- paste("There is no significant difference in the median ",response," between levels of ",group,". (chi-square=",statistic,", p=",pval,").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is no significant difference in the median ",response," between levels of ",group,". (chi-square=",statistic,", p=",pval,").",sep="")
+        wrapper(text1)
     }
     else if(pval < alpha){
-        text <- paste("At least one median ", response," among the levels of ", group, " differs from the rest. (chi-square=",statistic,", p=",pval,").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: At least one median ", response," among the levels of ", group, " differs from the rest. (chi-square=",statistic,", p=",pval,").",sep="")
+        wrapper(text1)
     }
 }
 

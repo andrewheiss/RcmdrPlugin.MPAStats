@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on November 26, 2013 by Jordan Gressel
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -28,9 +28,17 @@ singleTTestWords <- function(x){
         .not="not "
     }
 
-    text <- paste("The mean ",tolower(substring(x$data.name,varcut))
-        ," is ",.not,"significantly ",compare, x$null.value,". (t=",round(x$statistic,3)," p=",round(x$p.value,3),"). \n",sep="") 
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether the true population mean is significantly ",compare," {greater than, less than, or different from} ",x$null.value,".
+                   \n The test assumes that data are collected randomly from a normally-distributed population.
+                    \r ****************************************************************
+                   \n \n",sep="")
     wrapper(text)
+    
+    # text1 is the test results
+    text1 <- paste("Test Results: The mean ",tolower(substring(x$data.name,varcut))
+        ," is ",.not,"significantly ",compare, x$null.value,". (t=",round(x$statistic,3)," p=",round(x$p.value,3),"). \n",sep="") 
+    wrapper(text1)
 }
 
 # Modified singleSampleTTest function from Rcmdr: R Commander
@@ -127,14 +135,22 @@ pairedTTestWords=function(x){
     else if(x$alternative != "two.sided"){
         one.two <- "one"
     }
+    
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether there is a difference between ",grp1," and ",grp2," in the population, where ",grp1," and ",grp2," are organized into connected pairs; that is, whether the true mean population difference ",grp1," - ",grp2," is ",up.down," 0.
+                   \n The test assumes that data in each group are collected randomly and that the population of differences is normally-distributed.
+                    \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
 
+    # text1 is the test results
     if(pval >= alpha){
-        text <- paste("The mean difference of ",grp1," - ",grp2," is not significantly ",up.down,"0. (t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test).",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: The mean difference of ",grp1," - ",grp2," is not significantly ",up.down,"0. (t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test).",sep="")
+        wrapper(text1)
     }
     else if(pval < alpha){
-        text <- paste("It appears that the mean difference of ",grp1," - ",grp2," is ",up.down,"0. The true mean difference for ",grp1," -  ",grp2, " is likely between ",round(l.conf,2)," and ",round(u.conf,2),". (",conf.level,"% confidence, t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test). \n \n",sep="")
-    wrapper(text)
+        text1 <- paste("Test Results: It appears that the mean difference of ",grp1," - ",grp2," is ",up.down,"0. The true mean difference for ",grp1," -  ",grp2, " is likely between ",round(l.conf,2)," and ",round(u.conf,2),". (",conf.level,"% confidence, t=",round(t.value,3),", p=",round(pval,3)," for a ",one.two,"-tailed test). \n \n",sep="")
+    wrapper(text1)
     }
 
 }    
@@ -227,20 +243,28 @@ independentSamplesTTestWords <- function(x){
     if(x$alternative == "two.sided"){
         one.two="two"
     }
-
+    
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether there is a difference in the true population means of ",grp1," and ",grp2," , respectively.
+                   \n The test assumes that data in each group are collected randomly from a normally-distributed population.
+                    \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
+    
+    # text1 is the test results
     if(pval < alpha){
-        text <- paste("On average, the mean ",varname," for ",grp1, " is about ",
+        text1 <- paste("Test Results: On average, the mean ",varname," for ",grp1, " is about ",
             round(difference,2)," more than the mean ",varname," for ",grp2,
             ". The average ",varname," among ",grp1," was about ",round(meangrp1,2),
             ", and the average ",varname," among ",grp2," was about ",
             round(meangrp2,2),". (t=",round(t.value,3),", p=",round(pval,3),", for a ",one.two,
             "-tailed test). \n \n",sep="")
-        wrapper(text)
+        wrapper(text1)
     }
 
     else if(pval >= alpha){
-        text <- paste("There was no significant difference in the means of ",grp1," and ",grp2,". (alpha=",alpha,", ",one.two,"-tailed test).",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There was no significant difference in the means of ",grp1," and ",grp2,". (alpha=",alpha,", ",one.two,"-tailed test).",sep="")
+        wrapper(text1)
     }
 }
 

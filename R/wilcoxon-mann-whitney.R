@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on November 27, 2013 by Jordan Gressel
 
 # Interpretation function
 wilcoxonMannWhitneyWords <- function(x,group,response){
@@ -12,14 +12,21 @@ wilcoxonMannWhitneyWords <- function(x,group,response){
     pval <- x$p.value
     alpha <- .05
     statistic <- x$statistic
+    
+    # text is the test assumption
+    text <- paste("Test Information: This test determines whether level of ",group," affects level of ",response,"; that is, whether the population median of ",response," differs between the two levels of ",group,".
+                    \n The test assumes that all responses are ordinal and sampled independently.
+                  \r ****************************************************************
+                   \n \n",sep="")
+    wrapper(text)
 
     if(pval >= alpha){
-        text <- paste("There is no significant difference in the median ",response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is no significant difference in the median ",response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
     else if(pval < alpha){
-        text <- paste("There is a significant difference in the median ", response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: There is a significant difference in the median ", response," between the two levels of ",group,". (W=",round(statistic,3),", p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
 }
 

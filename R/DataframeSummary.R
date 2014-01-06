@@ -1,15 +1,19 @@
-# Last modified: 2012-06-15 by Andrew Heiss
+# Last modified: 2013-10-30 by Jordan Gressel
 #--------------------------------------------
 
-# Output a summary table of all numeric and factor columns, 
+# Output a summary table of all numeric and factor columns,
 # with optional output for confidence intervals
 DataframeSummary <- function(x, conf.intervals=TRUE) {
-  if (class(x) != "data.frame") 
+  if (class(x) != "data.frame")
     stop("must supply a dataframe")
   
   #-------------------------------------
   # Continuous, numeric data summaries
   x.continuous <- x[ , sapply(x, is.numeric)]
+  # If there is only one variable of type numeric, the following code puts it into a dataframe
+  if (class(x.continuous)=='numeric') {
+    x.continuous <- data.frame(x.continuous)
+  }
   if (ncol(x.continuous) > 0) {
     x.min <- apply(x.continuous, 2, min, na.rm=TRUE)
     x.max <- apply(x.continuous, 2, max, na.rm=TRUE)
@@ -24,18 +28,32 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
     colnames(results.continuous) <- c("Mean", "Std Dev", "Min", "Max", "N", "NAs")
     rownames(results.continuous) <- row.names
     
-    # Optionally add confidence interval columns  TODO: Make sure this can handle missing values
-    if (conf.intervals==TRUE) { 
-      calculate.confidence.intervals <- function(x, ...) {  
-        temp <- t.test(x)
-        c(temp$conf.int[1L], temp$conf.int[2L])
+    # Optionally add confidence interval columns 
+    # output creates a list where a for loop identifies if observations are the same and if so, no confidence interval is created
+    output <- vector("list", nrow(x))
+    for (i in 1:nrow(x)){
+      col <- as.numeric(as.vector(x[i,]))
+      col2 <- as.numeric(as.vector(x[i+1,]))
+      output[i] <- identical(col,col2)}
+    
+    if (conf.intervals==TRUE) {
+      if ((TRUE %in% output) == TRUE){
+        results.continuous
+        print("The active dataset has one or more identical observations which results in a failed t-test and no confidence intervals")
       }
-      
-      conf.table <- t(apply(x.continuous, 2, calculate.confidence.intervals))
-      colnames(conf.table) <- c("95% Conf. (lower)", "95% Conf. (upper)")
-      
-      results.continuous <- cbind(results.continuous, conf.table)
+      else{
+        calculate.confidence.intervals <- function(x, ...) {
+          temp <- t.test(x)
+          c(temp$conf.int[1L], temp$conf.int[2L])
+        }
+        
+        conf.table <- t(apply(x.continuous, 2, calculate.confidence.intervals))
+        colnames(conf.table) <- c("95% Conf. (lower)", "95% Conf. (upper)")
+        
+        results.continuous <- cbind(results.continuous, conf.table)
+      }
     }
+    
     
     # Print the results
     writeLines("Summary of continuous variables")
@@ -46,6 +64,10 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
   #------------------------
   # Categorical summaries
   x.factors <- x[ , sapply(x, is.factor)]
+  #If there is only one variable of type factor, the following code puts it into a dataframe
+  if (class(x.factors)=='factor') {
+    x.factors <- data.frame(x.factors)
+  }
   if (ncol(x.factors) > 0) {
     buildCountTable <- function(x) {
       

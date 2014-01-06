@@ -12,7 +12,38 @@
 #-----------------------------                                                                      
 # Additional models menu commands
     item    modelsMenu      command         "Factor change coefficients (MPA Statistics)"      factorChange     "glmP() || sclmP()"     ""                                                                                                   
-                                                                                                    
+                                       
+
+#-----------------------------                                                                      
+# Import/Export submenu  
+	menu    impMenu      mpaMenu        ""                                              ""                          ""          ""
+	item    mpaMenu      cascade         "Import/Export data"                            impMenu                  ""          ""
+    item    impMenu      command         "New data set..."                               newDataSet                  ""          "!MacOSXP()"
+    item    impMenu      command         "Load data set..."                              loadDataSet                 ""      ""
+	item    impMenu      command         "from text file, clipboard, or URL..."          readDataSet                 ""          ""
+    item    impMenu      command         "from SPSS data set..."                         importSPSS                  ""          "packageAvailable('foreign')"
+    item    impMenu      command         "from SAS xport file..."                        importSAS                   ""           "packageAvailable('foreign')"
+    item    impMenu      command         "from Minitab data set..."                      importMinitab               ""          "packageAvailable('foreign')"
+    item    impMenu      command         "from STATA data set..."                        importSTATA                 ""          "packageAvailable('foreign')"
+    item    impMenu      command         "from Excel, Access or dBase data set..."       importRODBCtable            ""          "WindowsP() && packageAvailable('RODBC') && (.Platform$r_arch == 'i386')"
+    item    impMenu      command         "from Excel file..."                            importExcel                 ""      "packageAvailable('XLConnect') && (!WindowsP() | (.Platform$r_arch != 'i386'))"									   
+	item    impMenu      command         "Export active data set..."                     exportDataSet               "activeDataSetP()"          ""
+	item    impMenu      command         "Save active data set..."                       saveDataSet                 "activeDataSetP()"          ""
+	
+#-----------------------------                                                                      
+# Edit submenu  
+    menu    variableMenu   mpaMenu        ""                                              ""                          ""          ""
+	item    mpaMenu        cascade         "Edit data"           variableMenu               ""          ""
+    item    variableMenu   command         "Recode variables..."                           RecodeDialog                "activeDataSetP()" "packageAvailable('car')"
+    item    variableMenu   command         "Compute new variable..."                       Compute                     "activeDataSetP()"          ""
+    item    variableMenu   command         "Standardize variables..."                      standardize                 "numericP()"                ""
+    item    variableMenu   command         "Convert numeric variables to factors..."       numericToFactor             "numericP()"                ""
+    item    variableMenu   command         "Bin numeric variable..."                       binVariable                 "numericP()"                ""
+    item    variableMenu   command         "Reorder factor levels..."                      reorderFactor               "factorsP()"                ""
+    item    variableMenu   command         "Define contrasts for a factor..."              setContrasts                "factorsP()"                ""
+    item    variableMenu   command         "Rename variables..."                           renameVariables             "activeDataSetP()"          ""
+    item    variableMenu   command         "Delete variables from data set ..."            deleteVariable              "activeDataSetP()"          ""
+
 #-----------------------------                                                                      
 # Descriptive statistics submenu                                                                    
                                                                                                     
@@ -20,6 +51,8 @@
     item    mpaMenu     cascade           "Descriptive statistics"  descStats           ""            ""
     item    descStats   command             "Summarize data set"      summarizeDataframe          "activeDataSetP()"    ""
     item    descStats   command             "View data set structure"      checkStructure          "activeDataSetP()"    ""
+    item    descStats   command         "Numerical summaries..."      numericalSummaries      "numericP()"       "packageAvailable('abind')" 
+    item    descStats   command         "Frequency distributions..."      frequencyDistribution      "factorsP()"    ""    
     # item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
     # item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
     # item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""

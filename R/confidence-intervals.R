@@ -1,4 +1,4 @@
-# Modified on June 13, 2013 by Christa Schank
+# Modified on October, 24 2013 by Jordan Gressel
 
 # Extract and pretty print the confidence interval from an object of class `htest`
 printConfint <- function(x) {
@@ -184,6 +184,10 @@ confintBinomial2 <- function () {
 		doItAndPrint(paste(".Table","<-",command))
 		### doItAndPrint("with(SUB,.Table)")
 		doItAndPrint(".Table")
+    #Creates (and prints) the matrix "ntable" which has the levels and counts of the variable 
+    doItAndPrint(paste("ntable<-(rbind(.Table))"))
+    #varname takes the 1st column name (or 1st level) 
+    varname <- colnames(ntable)[1]
 		### doItAndPrint(paste("with(SUB,.test.bi <- binom.test(rbind(.Table), alternative='", 
 		###					alternative, "', p=", 
                 ###                                        p, ", conf.level=", 
@@ -198,7 +202,7 @@ confintBinomial2 <- function () {
     doItAndPrint("printConfint(.test.bi)")
     # Inserted Code
     ### doItAndPrint(paste("with(SUB,confintBinomialWords(",level,",",'"',x,'"',",.test.bi))",sep=""))
-    doItAndPrint(paste("confintBinomialWords(",level,",",'"',x,'"',",.test.bi)",sep=""))
+    doItAndPrint(paste("confintBinomialWords(",level,",",'"',varname,'"',",.test.bi)",sep=""))
     # End Insertion  
     tkdestroy(top)
     tkfocus(CommanderWindow())

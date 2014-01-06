@@ -14,13 +14,22 @@ wordsAnova <- function(x,group,response){
     pval <- x[[1]][["Pr(>F)"]][1]
     alpha <- .05
     
+    text <- paste("Test Information: This test determines whether any level of ",group," affects ",response,"; 
+      that is, whether the true mean ",response," levels of ",group," are all equivalent to each other, 
+      or if the mean ",response," of at least one level of ",group," is significantly different from the others.
+      \n The test assumes one categorical independent variable. Observations are sampled independently. Residuals in each category are distributed as a Normal,
+      with equal variance across all levels of ",group,".
+      \r **************************************************
+    \n \n",sep="")
+    wrapper(text)
+    
     if(pval >= alpha){
-       text <- paste("There is no significant difference in the mean ",response," between levels of ",group,". (F=",round(fstat,3),", p=",round(pval,3),").",sep="")
-       wrapper(text)
+       text1 <- paste("Test Results: There is no significant difference in the mean ",response," between levels of ",group,". (F=",round(fstat,3),", p=",round(pval,3),").",sep="")
+       wrapper(text1)
     }
     else if(pval < alpha){
-        text <- paste("At least one mean ",response," among the levels of ",group," differs from the rest. (F=",round(fstat,3),",p=",round(pval,3),").",sep="")
-        wrapper(text)
+        text1 <- paste("Test Results: At least one mean ",response," among the levels of ",group," differs from the rest. (F=",round(fstat,3),",p=",round(pval,3),").",sep="")
+        wrapper(text1)
     }
 }
 
