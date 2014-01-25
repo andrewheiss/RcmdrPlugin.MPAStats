@@ -1,4 +1,4 @@
-# Last modified: 2013-10-30 by Jordan Gressel
+# Last modified: 2014-1-25 by Jordan Gressel
 #--------------------------------------------
 
 # Output a summary table of all numeric and factor columns,
@@ -29,29 +29,18 @@ DataframeSummary <- function(x, conf.intervals=TRUE) {
     rownames(results.continuous) <- row.names
     
     # Optionally add confidence interval columns 
-    # output creates a list where a for loop identifies if observations are the same and if so, no confidence interval is created
-    output <- vector("list", nrow(x))
-    for (i in 1:nrow(x)){
-      col <- as.numeric(as.vector(x[i,]))
-      col2 <- as.numeric(as.vector(x[i+1,]))
-      output[i] <- identical(col,col2)}
-    
-    if (conf.intervals==TRUE) {
-      if ((TRUE %in% output) == TRUE){
-        results.continuous
-        print("The active dataset has one or more identical observations which results in a failed t-test and no confidence intervals")
+    if (conf.intervals==TRUE) { 
+      calculate.confidence.intervals <- function(x, ...) {  
+        error <- qt(0.975,df=length(na.omit(x))-1)*sd(na.omit(x))/sqrt(length(na.omit(x)))
+        left <- mean(na.omit(x))-error
+        right <- mean(na.omit(x))+error
+        c(left, right)
       }
-      else{
-        calculate.confidence.intervals <- function(x, ...) {
-          temp <- t.test(x)
-          c(temp$conf.int[1L], temp$conf.int[2L])
-        }
-        
-        conf.table <- t(apply(x.continuous, 2, calculate.confidence.intervals))
-        colnames(conf.table) <- c("95% Conf. (lower)", "95% Conf. (upper)")
-        
-        results.continuous <- cbind(results.continuous, conf.table)
-      }
+      
+      conf.table <- t(apply(x.continuous, 2, calculate.confidence.intervals))
+      colnames(conf.table) <- c("95% Conf. (lower)", "95% Conf. (upper)")
+      
+      results.continuous <- cbind(results.continuous, conf.table)
     }
     
     
