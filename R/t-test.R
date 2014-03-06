@@ -1,4 +1,4 @@
-# Modified on November 26, 2013 by Jordan Gressel
+# Modified on Feb 18, 2014 by Jordan Gressel
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -61,13 +61,14 @@ singleSampleTTest2 <- function () {
 		putDialog ("singleSampleTTest2", list (initial.x = x, initial.alternative = alternative, 
 						initial.level = level, initial.mu = mu))
 		closeDialog()
+		doItAndPrint("t.test1")
                 # Inserted "t.test <-"
 		doItAndPrint(paste("t.test1 <- t.test(", ActiveDataSet(), "$", x, 
 						", alternative='", alternative, "', mu=", mu, ", conf.level=", 
 						level, ")", sep = ""))
-                # Inserted Code:
-                doItAndPrint("t.test1")
-                doItAndPrint("singleTTestWords(t.test1)")
+		doItAndPrint(paste("graphtest <- ", ActiveDataSet(), "$", x, sep = ""))  
+		doItAndPrint(paste("hist(graphtest, xlab='",ActiveDataSet(), "$", x,"', main='Histogram of ",ActiveDataSet(), "$", x,"')", sep = ""))
+        doItAndPrint("singleTTestWords(t.test1)")
                 # End Inserted Code
 		tkdestroy(top)
 		tkfocus(CommanderWindow())
@@ -190,6 +191,8 @@ pairedTTest2 <- function () {
 						sep = ""))
                 # Inserted Code:
                 doItAndPrint("t.test2")
+		            doItAndPrint(paste("graphtest2 <- cbind(",.activeDataSet, "$", x," , ", .activeDataSet, "$", y,"))", sep = ""))
+		            doItAndPrint(paste("boxplot(graphtest2, names=c('",.activeDataSet, "$", x,"' , '", .activeDataSet, "$", y,"'))", sep = ""))
                 doItAndPrint("pairedTTestWords(t.test2)")
                 # End Inserted Code
 		tkfocus(CommanderWindow())
@@ -306,7 +309,9 @@ independentSamplesTTest2 <- function () {
 						alternative, "', conf.level=", level, ", var.equal=", 
 						variances, ", data=", ActiveDataSet(), ")", sep = ""))
                 # Inserted Code:
+    
                 doItAndPrint("t.test3")
+		doItAndPrint(paste("boxplot(", response, "~", group, ", data= ",ActiveDataSet(), ", main='Independent Two Group T-test Boxplot')", sep = ""))
                 doItAndPrint("independentSamplesTTestWords(t.test3)")
                 # End Insertion
 		tkfocus(CommanderWindow())
@@ -340,3 +345,4 @@ independentSamplesTTest2 <- function () {
 	tkgrid(buttonsFrame, sticky = "w")
 	dialogSuffix(rows = 4, columns = 1)
 } 
+

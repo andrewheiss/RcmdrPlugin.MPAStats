@@ -15,11 +15,12 @@ printConfint <- function(x) {
 confintContinuousWords <- function(x){
      varcut<-nchar(ActiveDataSet())+2
 
-     cat("Our sample suggests that the average (mean) ",
+     cat("Our sample suggests that the true average (mean) of ",
        tolower(substring(x$data.name,varcut))," is between"," \n ",
        round(x$conf.int[1L],2)," and ",round(x$conf.int[2L],2), " (",
        100*attr(x$conf.int,"conf.level"),"% confidence level). \n",sep="" )
-}     
+}
+
 
 # Modified from confintContinuous function
 confintContinuous2 <- function () {

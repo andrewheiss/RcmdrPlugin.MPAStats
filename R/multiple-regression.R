@@ -185,6 +185,8 @@ linearModel2 <- function(){
                 doItAndPrint("model")
                 # Inserted Code:
                 ###doItAndPrint("with(SUB,multipleRegressionWords(model))")
+		doItAndPrint(paste("plot(",ActiveDataSet(),"$",tclvalue(lhsVariable),",",ActiveDataSet(),"$",tclvalue(rhsVariable),")", sep = ""))
+		doItAndPrint(paste("abline(",modelValue,")",sep=""))
                 doItAndPrint("multipleRegressionWords(model)")
                 # End Inserted Code
                 activeModel(modelValue)
