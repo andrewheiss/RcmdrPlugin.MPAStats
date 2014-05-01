@@ -58,7 +58,15 @@
     # item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""
     # item    descStats   command             "Binary..."             helloWorld          "activeDataSetP()"    ""
                                                                                                     
-                                                                                                    
+
+#-----------------------------                                                                      
+# Distribution Diagnostics submenu
+   menu    distdiag    mpaMenu             ""                          ""                 ""            ""
+   item    mpaMenu     cascade             "Distribution Diagnostics"  distdiag           ""            ""
+   item    distdiag    command             "Two-group t-test Variance Test... (binary ind. var.)"        distdiagnostics    "numericP()"    ""
+   item    distdiag    command             "Two-group t-test Normality Test... (binary ind. var.)"        distnormal    "numericP()"    ""
+
+                                                                                                  
 #-----------------------------                                                                      
 # Confidence intervals submenu                                                                      
                                                                                                     

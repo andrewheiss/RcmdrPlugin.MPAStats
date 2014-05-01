@@ -147,17 +147,19 @@ confintBinomialWords <- function(level,varname,x){
     l.limit <- x$conf.int[1]
     u.limit <- x$conf.int[2]
     conf.level <- 100*level
-    text <- paste("Our sample suggests that the proportion of ",varname," in the population is between ",l.limit," and ",u.limit," (",conf.level,"% confidence level, binomial corrected). \n \n",sep="")	
+    text <- paste("Our sample suggests that the proportion of ",varname," in the population is between ",round(l.limit,4)," and ",round(u.limit,4)," (",conf.level,"% confidence level, binomial corrected). \n \n",sep="")	
     wrapper(text)
 }
 
+
 # Dialog for calculating binary data (modified from confintBinomial function)
 confintBinomial2 <- function () {
-  defaults <- list (initial.x = NULL, initial.level = ".95")
+  defaults <- list (initial.x = NULL,  initial.level = ".95") 
   dialog.values <- getDialog ("confintBinomial2", defaults)  
   initializeDialog(title = gettextRcmdr("Confidence intervals for binomial data"))
-	xBox <- variableListBox(top, TwoLevelFactors(), title = gettextRcmdr("Variable (pick one)"),
-			initialSelection = varPosn(dialog.values$initial.x,"factor"))
+
+ xBox <- variableListBox(top, TwoLevelFactors(), title = gettextRcmdr("Variable (pick one)"),
+                        initialSelection = varPosn(dialog.values$initial.x,"factor"))
 	
   onOK <- function() {
     x <- getSelection(xBox)
@@ -165,7 +167,8 @@ confintBinomial2 <- function () {
 			errorCondition(recall = singleProportionTest, message = gettextRcmdr("You must select a variable."))
 			return()
 		}
-		
+
+
     level <- tclvalue(confidenceLevel)
     alternative <- "two.sided"
     p <- .5
@@ -175,11 +178,17 @@ confintBinomial2 <- function () {
     ### assign("alternative",alternative,envir=SUB)
     ### assign("p",p,envir=SUB)
     ### END INSERTION
-    
-    putDialog ("confintBinomial2", list (initial.x = x, initial.level = level))
+ 
+  putDialog ("confintBinomial2", list (initial.x = x, initial.level = level))
+ 
     closeDialog()
     # Modified to interact with the SUB environment
-    command <- paste("xtabs(~", x, ", data=", ActiveDataSet(), ")")
+
+var1 <- paste("table(",ActiveDataSet(),"$",x,")[1]")
+var2 <- paste("table(",ActiveDataSet(),"$",x,")[2]")
+command <- paste("c(",var2,",",var1,")")
+#changed command from xtabs to c(var1,var2) in preparation to be able to choose which factor you want to build on
+   # command <- paste("xtabs(~", x, ", data=", ActiveDataSet(), ")")
                 # logger(paste(".Table <-", command))
 		### assign(".Table", justDoIt(with(environment(),command)),envir=SUB)
 		doItAndPrint(paste(".Table","<-",command))
@@ -204,6 +213,7 @@ confintBinomial2 <- function () {
     # Inserted Code
     ### doItAndPrint(paste("with(SUB,confintBinomialWords(",level,",",'"',x,'"',",.test.bi))",sep=""))
     doItAndPrint(paste("confintBinomialWords(",level,",",'"',varname,'"',",.test.bi)",sep=""))
+
     # End Insertion  
     tkdestroy(top)
     tkfocus(CommanderWindow())
@@ -213,17 +223,17 @@ confintBinomial2 <- function () {
   # Create main frames
   leftFrame <- getFrame(xBox)
   rightFrame <- tkframe(top)
-
+ 
   # Confidence frame
   confidenceFrame <- tkframe(rightFrame)
   confidenceLevel <- tclVar(dialog.values$initial.level)
   confidenceField <- ttkentry(confidenceFrame, width = "6", 
-                              textvariable = confidenceLevel)
-  
+                              textvariable = confidenceLevel) 
   # Labels
   tkgrid(labelRcmdr(rightFrame, text = ""), sticky = "w")
   tkgrid(labelRcmdr(confidenceFrame, text = gettextRcmdr("Confidence Level: ")), 
                     confidenceField, sticky = "w")
+
 
   # Place frames
   tkgrid(leftFrame, rightFrame)
