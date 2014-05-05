@@ -1,5 +1,12 @@
 # RcmdrPlugin.MPAStats Changelog
 
+## 1.1.5 -- May 5, 2014
+
+* Added: Graphs for t-tests and multiple regression
+* Updated: 
+  * Improved dataframe summary function
+  * Improved interpretation text for some functions
+
 ## 1.1.4 -- December 28, 2013
 
 * Added: New menu items: 
