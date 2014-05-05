@@ -19,7 +19,7 @@ if (getRversion() >= '2.15.1') globalVariables(c('top',
 'proportionalOddsModel', 'subsetVariable', 'lhsVariable',
 'rhsVariable', 'modelTypeVariable', 'xBox',
 'outerOperatorsFrame', 'formulaFrame', 'subsetFrame',
-'modelTypeFrame', 'lhsEntry'))
+'modelTypeFrame', 'lhsEntry', 'plotsVariable', 'plotsFrame'))
 
 # Addition by Richard Payne
 if (getRversion() >= '2.15.1') globalVariables(c('onHelp','alternativeVariable','variancesVariable','.groupsLabel','alternativeFrame','variancesFrame','testVariable','testFrame','percentsVariable','chisqTestVariable','chisqComponentsVariable','expFreqVariable','fisherTestVariable','.Test','.Table','percentsFrame','testsFrame', 'ntable'))
