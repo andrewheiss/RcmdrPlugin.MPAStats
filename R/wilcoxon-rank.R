@@ -19,8 +19,8 @@ wilcoxonWords <- function(x,var1,var2){
     Wstat <- x$statistic
     
     # text is the test assumption
-    text <- paste("Test Information: This test determines the median distance between ",var1," and ",var2," in the population, where ",var1," and ",var2," are organized into connected pairs; that is,  whether the true mean population difference ",var1," - ",var2," is ",alternative,null,".
-                  \n The test assumes that data are ordinal and paired. They are chosen randomly and independently from the same population. Differences are distributed symmetrically.
+    text <- paste("Test Information: This test determines the median distance between ",var1," and ",var2," in the population, where ",var1," and ",var2," are organized into connected pairs; that is, whether the true mean population difference ",var1," - ",var2," is ",alternative,null,".
+                  \n The test assumes that the data are paired and from same population, that each pair is chosen randomly and independently, and that the data are measured at least on an ordinal scale. Differences are distributed symmetrically.
                    \r ****************************************************************
                   \n \n",sep="")
     wrapper(text)

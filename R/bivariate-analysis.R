@@ -1,4 +1,4 @@
-# Modified on November 19, 2013 by Jordan Gressel
+# Modified on March 19, 2014 by Jordan Gressel
 
 #Interpretation Function
 #dat.factor represents the vector of factor data we are testing
@@ -16,8 +16,12 @@ singleProportionTestWords <- function(varname,level,x){
 
     up.down <- paste(x$alternative," than ",sep="")
     if(up.down == "two.sided than "){
-        up.down <- "different from "
+      if (x$estimate < x$null.value){
+        up.down="smaller than "}
+      else{
+        up.down="larger than "}
     }
+    
     # text is the test assumption
     text <- paste("Test Information: This test determines whether the true proportion of ",varname," in the population is significantly ",up.down,null.value,".
                    \n The test assumes that data are randomly and independently sampled. Furthermore,
@@ -30,12 +34,12 @@ singleProportionTestWords <- function(varname,level,x){
     
     # text1 is the test results
     if(pval >= alpha){
-        text1 <- paste("Test Results:The proportion of ",varname," in the population is not significantly ",up.down,null.value,". \n \n",sep="")
+        text1 <- paste("Test Results:The proportion of ",varname ," (", round(x$estimate,2),") in the population is not significantly ",up.down," the hypothesized value ",null.value,". \n \n",sep="")
         wrapper(text1)
     }
 
     else if(pval < alpha){
-        text1 <- paste("Test Results:The proportion of ",varname," in the population is significantly ",up.down,null.value," (p=",round(pval,3),"). \n \n",sep="")
+        text1 <- paste("Test Results:The proportion of ",varname ," (", round(x$estimate,2),") in the population is significantly ",up.down," the hypothesized value ",null.value," (p=",round(pval,3),"). \n \n",sep="")
         wrapper(text1)
     }
 }

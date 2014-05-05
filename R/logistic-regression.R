@@ -1,4 +1,4 @@
-# Modified on November 27, 2013 by Jordan Gressel
+# Modified on Feb 13, 2014 by Jordan Gressel
 
 # Interpretation Function
 logitWords <- function(x){
@@ -47,7 +47,7 @@ logitWords <- function(x){
                        cat("Test Results: ",factorname," has no statistical relationship with ",yname," (alpha=.05). \n \n")
                    }
                    else if(pval < alpha){
-                       cat("Test Results: Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". ","On average, for a one unit increase in ",factorname,",",yname," is ",round(exp(beta),3),moreless," likely to occur. (z=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
+                       cat("Test Results: Controlling for all other variables in the model ",varnames[i]," has a statistically significant ",sign," relationship with ",yname,". "," For every one unit increase in ",factorname,",",yname," is about ",1/round(exp(beta),3)," times ",moreless," likely to occur. (z=",round(x$coefficients[j,3],3),", p=",round(x$coefficients[j,4],3),"). \n \n",sep="")
                    } 
                }
             }
@@ -73,7 +73,7 @@ logitWords <- function(x){
             updown <- "decreases"
         }
         if(pval >=  alpha){
-            cat("Test Results ",xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
+            cat("Test Results: ",xname," has no statistical relationship with ",yname," (alpha=.05). \n \n",sep="")
         }
         else if(pval < alpha){
             cat("Test Results: Controlling for all other variables in the model, ",xname," has a statistically significant ",sign," relationship with ",yname,". For a one unit increase in ",xname,", the likelihood of ",yname," ",updown," by a factor of ",round(exp(beta),3)," units. (z=",round(x$coefficients[i,3],3),", p=",round(x$coefficients[i,4],3),"). \n \n",sep="")
