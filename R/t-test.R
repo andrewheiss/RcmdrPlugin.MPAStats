@@ -1,4 +1,4 @@
-# Modified on April 23, 2014 by Jordan Gressel
+# Modified on October 22, 2014 by Jessica Peterson
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -488,9 +488,15 @@ DistWords2 <- function(x,y,z){
     }
   }
   clevel <- 1-y
+ 
+  group1 <- x[[1]]
+  group2 <- x[[2]]
   
-  group1 <- z[1]
-  group2 <- z[2]
+  pval1 <- group1$p.value
+  pval2 <- group2$p.value
+  
+  groups1 <- levels(z)[1]
+  groups2 <- levels(z)[2]
   
   text1 <- paste("Test Information: This test determines whether the data of the two samples are normally distributed.
                   If the p-value is less than the alpha of ",clevel," then the data is not normally distributed. 
@@ -498,6 +504,26 @@ DistWords2 <- function(x,y,z){
                  \n \n",sep="")
   
   wrapper(text1)
+  #### Adding specific conclusions for each group in testing
+  if(pval1 >= clevel){
+    text3 <- paste("Test Results: Because p-value > alpha of ",clevel," , the data is normally distributed within ",groups1,". \n \n",sep="")
+    wrapper(text3)
+  }
+  
+  else if(pval1 < clevel){
+    text3 <- paste("Test Results: Because p-value < alpha of ",clevel," , the data is not normally distributed within ",groups1,". \n \n",sep="")
+    wrapper(text3)
+  }
+
+  if(pval2 >= clevel){
+    text4 <- paste("Test Results: Because p-value > alpha of ",clevel,", the data is normally distributed within ",groups2,".\n \n",sep="")
+    wrapper(text4)
+  }
+  else if(pval2 < clevel){
+    text4 <- paste("Test Results: Because our p-value < alpha of ",clevel,", the data is not normaly distributed within ",groups2,". \n\n", sep="")
+    wrapper(text4)
+  }
+
 }
 
 distnormal <- function(x){
