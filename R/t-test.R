@@ -396,7 +396,7 @@ DistWords <- function(x){
   }
 
   
-  if (x$p.value == 1){
+  if (x$p.value >= .05){
     text <-"The two variances are equal so when doing a two-group t-test, check the equal variances box."
  }
   else { text <-"The two variances are NOT equal so when doing a two-group t-tests, do NOT check the equal variances box."
