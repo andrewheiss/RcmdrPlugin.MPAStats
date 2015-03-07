@@ -1,4 +1,4 @@
-# Modified on October 22, 2014 by Jessica Peterson
+# Modified on March 5, 2014 by Jessica Peterson
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -12,12 +12,17 @@ singleTTestWords <- function(x){
     varcut <- nchar(ActiveDataSet())+2
     
     compare=paste(x$alternative," than ",sep="")
-    if(compare == "two.sided than "){
-        if (x$estimate < x$null.value){
-          compare="smaller than "}
-        else{
-          compare="larger than "}
+    if(x$alternative == "two.sided"){
+      compare <- "different from"
     }
+    else if (x$alternative != "two.sided"){
+          if (x$alternative == "less") {
+            compare="smaller than"}
+          else if (x$alternative == "greater"){
+          compare="larger than"}
+          
+    }
+    
 
     m <- x$estimate
     pval=x$p.value
@@ -32,7 +37,7 @@ singleTTestWords <- function(x){
     }
 
     # text is the test assumption
-    text <- paste("Test Information: This test determines whether the true population mean is significantly ",compare," {greater than, less than, or different from} ",x$null.value,".
+    text <- paste("Test Information: This test determines whether the true population mean is significantly ",compare," ",x$null.value,".
                    \n The test assumes that data are collected randomly from a normally-distributed population.
                     \r ****************************************************************
                    \n \n",sep="")
