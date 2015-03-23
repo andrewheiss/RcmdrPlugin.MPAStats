@@ -53,6 +53,9 @@
     item    descStats   command             "View data set structure"      checkStructure          "activeDataSetP()"    ""
     item    descStats   command         "Numerical summaries..."      numericalSummaries      "numericP()"       "packageAvailable('abind')" 
     item    descStats   command         "Frequency distributions..."      frequencyDistribution      "factorsP()"    ""    
+    item    descStats   command         "Test of Normality"            ShapiroTest             "numericP()"      ""
+    item    descStats   command         "Test of Equal Variances"     LeveneTest              "numericP() && factorsP()" "packageAvailable('car')"
+
     # item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
     # item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
     # item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""

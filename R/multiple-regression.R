@@ -1,4 +1,4 @@
-# Modified on March 19, 2014 by Jordan Gressel
+# Modified on March 22, 2014 by Jessica Peterson
 
 # Interpretation function
 multipleRegressionWords <- function(x){
@@ -185,7 +185,7 @@ linearModel2 <- function(){
                 doItAndPrint("model")
                 # Inserted Code:
                 ###doItAndPrint("with(SUB,multipleRegressionWords(model))")
-		doItAndPrint(paste("plot(",ActiveDataSet(),"$",tclvalue(lhsVariable),",",ActiveDataSet(),"$",tclvalue(rhsVariable),")", sep = ""))
+		doItAndPrint(paste("plot(",ActiveDataSet(),"$",tclvalue(rhsVariable),",",ActiveDataSet(),"$",tclvalue(lhsVariable),")", sep = ""))
 		doItAndPrint(paste("abline(",modelValue,")",sep=""))
                 doItAndPrint("multipleRegressionWords(model)")
                 # End Inserted Code
