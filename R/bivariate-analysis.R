@@ -1,4 +1,4 @@
-# Modified on March 19, 2014 by Jordan Gressel
+# Modified on Jan 6, 2016 by Jessica Reese
 
 #Interpretation Function
 #dat.factor represents the vector of factor data we are testing
@@ -118,7 +118,7 @@ singleProportionTest2 <- function () {
 							"Normal approximation with\ncontinuity correction", "Exact binomial")), 
 			title = gettextRcmdr("Type of Test"), initialValue = dialog.values$initial.test)
 	tkgrid(getFrame(xBox), sticky = "nw")
-	tkgrid(labelRcmdr(pFrame, text = gettextRcmdr("Null hypothesis: p = "), 
+	tkgrid(labelRcmdr(pFrame, text = gettextRcmdr("Hypothesized proportion value = "), 
 					fg = "blue"), pField, sticky = "w")
 	tkgrid(pFrame, sticky = "w")
 	tkgrid(labelRcmdr(rightFrame, text = ""))
@@ -191,7 +191,7 @@ ordinalRegressionModel.ordinal <- function(){
 		}
 		if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=get(.activeDataSet, envir=.GlobalEnv)))){
 #        if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=eval(parse(text=.activeDataSet), envir=.GlobalEnv)))){
-			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Response variable must be a factor"))
+			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Dependent (outcome) variable must be a factor"))
 			return()
 		}
 		if (is.element(modelValue, listProportionalOddsModels())) {
@@ -284,7 +284,7 @@ twoSampleProportionsTest2 <- function () {
 	.twoLevelFactors <- TwoLevelFactors()
 	groupsBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Groups (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.groups, "twoLevelFactor"))
-	xBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Response Variable (pick one)"), 
+	xBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Dependent (outcome) Variable (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.response, "twoLevelFactor"))
 	onOK <- function() {
 		groups <- getSelection(groupsBox)
@@ -296,12 +296,12 @@ twoSampleProportionsTest2 <- function () {
 		x <- getSelection(xBox)
 		if (length(x) == 0) {
 			errorCondition(recall = twoSampleProportionsTest2, 
-					message = gettextRcmdr("You must select a response variable."))
+					message = gettextRcmdr("You must select a dependent (outcome) variable."))
 			return()
 		}
 		if (x == groups) {
 			errorCondition(recall = twoSampleProportionsTest2, 
-					message = gettextRcmdr("Groups and response variables must be different."))
+					message = gettextRcmdr("Groups and dependent (outcome) variables must be different."))
 			return()
 		}
 		alternative <- as.character(tclvalue(alternativeVariable))
