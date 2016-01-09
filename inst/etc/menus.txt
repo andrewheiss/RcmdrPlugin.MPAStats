@@ -43,6 +43,7 @@
     item    variableMenu   command         "Define contrasts for a factor..."              setContrasts                "factorsP()"                ""
     item    variableMenu   command         "Rename variables..."                           renameVariables             "activeDataSetP()"          ""
     item    variableMenu   command         "Delete variables from data set ..."            deleteVariable              "activeDataSetP()"          ""
+item    variableMenu   command         "Delete rows from data set ..."            RemoveRows              "activeDataSetP()"          ""
 
 #-----------------------------                                                                      
 # Descriptive statistics submenu                                                                    
@@ -65,7 +66,7 @@
 #-----------------------------                                                                      
 # Distribution Diagnostics submenu
    menu    distdiag    mpaMenu             ""                          ""                 ""            ""
-   item    mpaMenu     cascade             "Distribution Diagnostics"  distdiag           ""            ""
+   item    mpaMenu     cascade             "Distribution diagnostics"  distdiag           ""            ""
    item    distdiag    command             "Two-group Variance Test (t-test)... (binary ind. var.)"        distdiagnostics    "numericP()"    ""
    item    distdiag    command             "Two-group Normality Test (t-test )... (binary ind. var.)"        distnormal    "numericP()"    ""
 
