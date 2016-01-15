@@ -1,4 +1,4 @@
-# Modified on Jan 6, 2016 by Jessica Peterson
+# Modified on April 23, 2014 by Jordan Gressel
 
 # Interpretation function
 singleTTestWords <- function(x){
@@ -12,17 +12,12 @@ singleTTestWords <- function(x){
     varcut <- nchar(ActiveDataSet())+2
     
     compare=paste(x$alternative," than ",sep="")
-    if(x$alternative == "two.sided"){
-      compare <- "different from"
+    if(compare == "two.sided than "){
+        if (x$estimate < x$null.value){
+          compare="smaller than "}
+        else{
+          compare="larger than "}
     }
-    else if (x$alternative != "two.sided"){
-          if (x$alternative == "less") {
-            compare="smaller than"}
-          else if (x$alternative == "greater"){
-          compare="larger than"}
-          
-    }
-    
 
     m <- x$estimate
     pval=x$p.value
@@ -37,7 +32,7 @@ singleTTestWords <- function(x){
     }
 
     # text is the test assumption
-    text <- paste("Test Information: This test determines whether the true population mean is significantly ",compare," ",x$null.value,".
+    text <- paste("Test Information: This test determines whether the true population mean is significantly ",compare," {greater than, less than, or different from} ",x$null.value,".
                    \n The test assumes that data are collected randomly from a normally-distributed population.
                     \r ****************************************************************
                    \n \n",sep="")
@@ -50,7 +45,7 @@ singleTTestWords <- function(x){
 
 # Modified singleSampleTTest function from Rcmdr: R Commander
 singleSampleTTest2 <- function () {
-	defaults <- list (initial.x = NULL, initial.alternative = "two.sided", initial.level = ".95", #initial.plots="No",
+	defaults <- list (initial.x = NULL, initial.alternative = "two.sided", initial.level = ".95", initial.plots="No",
 			initial.mu = "0.0")
 	dialog.values <- getDialog ("singleSampleTTest2", defaults)  
 	initializeDialog(title = gettextRcmdr("Single-Sample t-Test"))
@@ -65,10 +60,9 @@ singleSampleTTest2 <- function () {
 		alternative <- as.character(tclvalue(alternativeVariable))
 		level <- tclvalue(confidenceLevel)
     	mu <- tclvalue(muVariable)
-		#plots <- as.character(tclvalue(plotsVariable))
+		plots <- as.character(tclvalue(plotsVariable))
 		putDialog ("singleSampleTTest2", list (initial.x = x, initial.alternative = alternative, 
-						initial.level = level, #initial.plots=plots,
-            initial.mu = mu))
+						initial.level = level, initial.plots=plots, initial.mu = mu))
 		closeDialog()
                 # Inserted "t.test <-"
 		doItAndPrint(paste("t.test1 <- t.test(", ActiveDataSet(), "$", x, 
@@ -77,12 +71,12 @@ singleSampleTTest2 <- function () {
 		doItAndPrint("t.test1")
     
     #added plot option
-		#if(plots == "Yes"){
-		 # doItAndPrint(paste("graphtest <- ", ActiveDataSet(), "$", x, sep = ""))  
-		  #doItAndPrint(paste("hist(graphtest, xlab='",ActiveDataSet(), "$", x,"', main='Histogram of ",ActiveDataSet(), "$", x,"')", sep = ""))
-		#}
+		if(plots == "Yes"){
+		  doItAndPrint(paste("graphtest <- ", ActiveDataSet(), "$", x, sep = ""))  
+		  doItAndPrint(paste("hist(graphtest, xlab='",ActiveDataSet(), "$", x,"', main='Histogram of ",ActiveDataSet(), "$", x,"')", sep = ""))
+		}
 	
-     #   doItAndPrint("singleTTestWords(t.test1)")
+        doItAndPrint("singleTTestWords(t.test1)")
                 # End Inserted Code
 		tkdestroy(top)
 		tkfocus(CommanderWindow())
@@ -94,11 +88,11 @@ singleSampleTTest2 <- function () {
 							"Population mean > mu0")), title = gettextRcmdr("Alternative Hypothesis"),
 			initialValue = dialog.values$initial.alternative)
 	rightFrame <- tkframe(top)
-	#radioButtons(top, name = "plots", buttons = c("Yes", 
-	 #                                                      "No"), values = c("Yes", "No"), 
-	  #           labels = gettextRcmdr(c("Yes",
-	   #                                  "No")), title = gettextRcmdr("Plot?"),
-	    #         initialValue = dialog.values$initial.plot)
+	radioButtons(top, name = "plots", buttons = c("Yes", 
+	                                                       "No"), values = c("Yes", "No"), 
+	             labels = gettextRcmdr(c("Yes",
+	                                     "No")), title = gettextRcmdr("Plot?"),
+	             initialValue = dialog.values$initial.plot)
 	confidenceFrame <- tkframe(rightFrame)
 	confidenceLevel <- tclVar(dialog.values$initial.level)
 	confidenceField <- ttkentry(confidenceFrame, width = "6", 
@@ -108,14 +102,14 @@ singleSampleTTest2 <- function () {
 	muField <- ttkentry(muFrame, width = "8", textvariable = muVariable)
 	tkgrid(getFrame(xBox), sticky = "nw")
 	tkgrid(labelRcmdr(rightFrame, text = ""), sticky = "w")
-	tkgrid(labelRcmdr(muFrame, text = gettextRcmdr("Hypothesized mean value = ")), 
+	tkgrid(labelRcmdr(muFrame, text = gettextRcmdr("Null hypothesis: mu = ")), 
 			muField, sticky = "w")
 	tkgrid(muFrame, sticky = "w")
 	tkgrid(labelRcmdr(confidenceFrame, text = gettextRcmdr("Confidence Level: ")), 
 			confidenceField, sticky = "w")
 	tkgrid(confidenceFrame, sticky = "w")
 	tkgrid(alternativeFrame, rightFrame, sticky = "nw")
-	#tkgrid(plotsFrame, rightFrame, sticky = "w")
+	tkgrid(plotsFrame, rightFrame, sticky = "w")
 	tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
 	tkgrid.configure(confidenceField, sticky = "e")
 	dialogSuffix(rows = 4, columns = 2)
@@ -178,7 +172,7 @@ pairedTTestWords=function(x){
 
 # Modifed pairedTTest from Rcmdr: R Commander
 pairedTTest2 <- function () {
-	defaults <- list(initial.x = NULL, initial.y = NULL, initial.alternative = "two.sided", #initial.plots="No",
+	defaults <- list(initial.x = NULL, initial.y = NULL, initial.alternative = "two.sided", initial.plots="No",
 			initial.confidenceLevel = ".95")
 	dialog.values <- getDialog("pairedTTest2", defaults)
 	initializeDialog(title = gettextRcmdr("Paired t-Test"))
@@ -200,8 +194,8 @@ pairedTTest2 <- function () {
 		}
 		alternative <- as.character(tclvalue(alternativeVariable))
 		level <- tclvalue(confidenceLevel)
-		#plots <- as.character(tclvalue(plotsVariable))
-		putDialog ("pairedTTest2", list (initial.x = x, initial.y = y, initial.alternative = alternative, #initial.plots=plots,
+		plots <- as.character(tclvalue(plotsVariable))
+		putDialog ("pairedTTest2", list (initial.x = x, initial.y = y, initial.alternative = alternative, initial.plots=plots,
 						initial.confidenceLevel = level))
 		closeDialog()
 		.activeDataSet <- ActiveDataSet()
@@ -211,13 +205,13 @@ pairedTTest2 <- function () {
 						alternative, "', conf.level=", level, ", paired=TRUE)", 
 						sep = ""))
                 # Inserted Code:
-            #doItAndPrint("t.test2")
+            doItAndPrint("t.test2")
     
-		  #if(plots == "Yes"){
-		  #doItAndPrint(paste("graphtest2 <- cbind(",.activeDataSet, "$", x," , ", .activeDataSet, "$", y,")", sep = ""))
-		  #doItAndPrint(paste("boxplot(graphtest2, names=c('",.activeDataSet, "$", x,"' , '", .activeDataSet, "$", y,"'))", sep = ""))
-		  #}
-       #         doItAndPrint("pairedTTestWords(t.test2)")
+		  if(plots == "Yes"){
+		  doItAndPrint(paste("graphtest2 <- cbind(",.activeDataSet, "$", x," , ", .activeDataSet, "$", y,")", sep = ""))
+		  doItAndPrint(paste("boxplot(graphtest2, names=c('",.activeDataSet, "$", x,"' , '", .activeDataSet, "$", y,"'))", sep = ""))
+		  }
+                doItAndPrint("pairedTTestWords(t.test2)")
                 # End Inserted Code
 		tkfocus(CommanderWindow())
 	}
@@ -227,11 +221,11 @@ pairedTTest2 <- function () {
 			labels = gettextRcmdr(c("Two-sided", "Difference < 0", 
 							"Difference > 0")), title = gettextRcmdr("Alternative Hypothesis"), 
 			initialValue = dialog.values$initial.alternative)
-	#radioButtons(top, name = "plots", buttons = c("Yes", 
-	 #                                                      "No"), values = c("Yes", "No"), 
-	  #           labels = gettextRcmdr(c("Yes",
-	   #                                  "No")), title = gettextRcmdr("Plot?"),
-	    #         initialValue = dialog.values$initial.plot)
+	radioButtons(top, name = "plots", buttons = c("Yes", 
+	                                                       "No"), values = c("Yes", "No"), 
+	             labels = gettextRcmdr(c("Yes",
+	                                     "No")), title = gettextRcmdr("Plot?"),
+	             initialValue = dialog.values$initial.plot)
 	confidenceFrame <- tkframe(top)
 	confidenceLevel <- tclVar(dialog.values$initial.confidenceLevel)
 	confidenceField <- ttkentry(confidenceFrame, width = "6", 
@@ -241,7 +235,7 @@ pairedTTest2 <- function () {
 					fg = "blue"))
 	tkgrid(confidenceField, sticky = "w")
 	tkgrid(alternativeFrame, confidenceFrame, sticky = "nw")
-#	tkgrid(plotsFrame, confidenceFrame, sticky = "w") 
+	tkgrid(plotsFrame, confidenceFrame, sticky = "w") 
 	tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
 	dialogSuffix(rows = 3, columns = 2)
 }
@@ -307,8 +301,7 @@ independentSamplesTTestWords <- function(x){
 # Modified from independentSamplesTTest from Rcmdr: R Commander
 independentSamplesTTest2 <- function () {
 	defaults <- list(initial.group = NULL, initial.response = NULL, initial.alternative = "two.sided", 
-			initial.confidenceLevel = ".95", initial.variances = "FALSE", #initial.plots="No", 
-      initial.label=NULL)
+			initial.confidenceLevel = ".95", initial.variances = "FALSE", initial.plots="No", initial.label=NULL)
 	dialog.values <- getDialog("independentSamplesTTest2", defaults)
 	initializeDialog(title = gettextRcmdr("Independent Samples t-Test"))
 	variablesFrame <- tkframe(top)
@@ -316,7 +309,7 @@ independentSamplesTTest2 <- function () {
 			title = gettextRcmdr("Groups (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.group, "twoLevelFactor"))
 	responseBox <- variableListBox(variablesFrame, Numeric(), 
-			title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
+			title = gettextRcmdr("Response Variable (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.response, "numeric"))
 	onOK <- function() {
 		group <- getSelection(groupBox)
@@ -328,16 +321,15 @@ independentSamplesTTest2 <- function () {
 		response <- getSelection(responseBox)
 		if (length(response) == 0) {
 			errorCondition(recall = independentSamplesTTest2, 
-					message = gettextRcmdr("You must select a dependent (outcome) variable."))
+					message = gettextRcmdr("You must select a response variable."))
 			return()
 		}
 		alternative <- as.character(tclvalue(alternativeVariable))
 		level <- tclvalue(confidenceLevel)
 		variances <- as.character(tclvalue(variancesVariable))
-		#plots <- as.character(tclvalue(plotsVariable))
+		plots <- as.character(tclvalue(plotsVariable))
 		putDialog ("independentSamplesTTest2", list (initial.group = group, initial.response = response, initial.alternative = alternative, 
-						initial.confidenceLevel = level, initial.variances = variances, #initial.plots=plots,
-            initial.label=.groupsLabel))        
+						initial.confidenceLevel = level, initial.variances = variances, initial.plots=plots, initial.label=.groupsLabel))        
 		closeDialog()
                 # Added  "t.test3 <-" 
 		doItAndPrint(paste("t.test3 <- t.test(", response, "~", group, ", alternative='", 
@@ -348,9 +340,9 @@ independentSamplesTTest2 <- function () {
     
 		doItAndPrint("independentSamplesTTestWords(t.test3)")
     
-		#if(plots == "Yes"){
-     # doItAndPrint(paste("boxplot(", response, "~", group, ", data= ",ActiveDataSet(), ", main='Independent Two Group T-test Boxplot')", sep = ""))
-    #}
+		if(plots == "Yes"){
+      doItAndPrint(paste("boxplot(", response, "~", group, ", data= ",ActiveDataSet(), ", main='Independent Two Group T-test Boxplot')", sep = ""))
+    }
 	
                 # End Insertion
 		tkfocus(CommanderWindow())
@@ -363,11 +355,11 @@ independentSamplesTTest2 <- function () {
 							"Difference > 0")), title = gettextRcmdr("Alternative Hypothesis"),
 			initialValue = dialog.values$initial.alternative)
 	#####ADDED PLOT BUTTONS
-	#radioButtons(optionsFrame, name = "plots", buttons = c("Yes", 
-	 #                                                            "No"), values = c("Yes", "No"), 
-	  #           labels = gettextRcmdr(c("Yes",
-     #                                 "No")), title = gettextRcmdr("Plot?"),
-	    #         initialValue = dialog.values$initial.plot)
+	radioButtons(optionsFrame, name = "plots", buttons = c("Yes", 
+	                                                             "No"), values = c("Yes", "No"), 
+	             labels = gettextRcmdr(c("Yes",
+                                      "No")), title = gettextRcmdr("Plot?"),
+	             initialValue = dialog.values$initial.plot)
 	confidenceFrame <- tkframe(optionsFrame)
 	confidenceLevel <- tclVar(dialog.values$initial.confidenceLevel)
 	confidenceField <- ttkentry(confidenceFrame, width = "6", 
@@ -385,7 +377,7 @@ independentSamplesTTest2 <- function () {
   groupsLabel(groupsBox = groupBox, initialText=dialog.values$initial.label)
 	tkgrid(alternativeFrame, labelRcmdr(optionsFrame, text = "    "), 
 			confidenceFrame, labelRcmdr(optionsFrame, text = "    "), 
-		#	plotsFrame, labelRcmdr(optionsFrame, text = "    "), 
+			plotsFrame, labelRcmdr(optionsFrame, text = "    "), 
 			variancesFrame, sticky = "nw")
 	tkgrid(optionsFrame, sticky = "nw")
 	tkgrid(buttonsFrame, sticky = "w")
@@ -404,7 +396,7 @@ DistWords <- function(x){
   }
 
   
-  if (x$p.value >= .05){
+  if (x$p.value == 1){
     text <-"The two variances are equal so when doing a two-group t-test, check the equal variances box."
  }
   else { text <-"The two variances are NOT equal so when doing a two-group t-tests, do NOT check the equal variances box."
@@ -429,7 +421,7 @@ distdiagnostics <- function(x){
                              title = gettextRcmdr("Groups (pick one)"), 
                              initialSelection = varPosn(dialog.values$initial.group, "twoLevelFactor"))
  responseBox <- variableListBox(variablesFrame, Numeric(), 
-                                title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
+                                title = gettextRcmdr("Response Variable (pick one)"),
                                 initialSelection = varPosn(dialog.values$initial.response, "numeric"))
  onOK <- function() {
    group <- getSelection(groupBox)
@@ -441,7 +433,7 @@ distdiagnostics <- function(x){
    response <- getSelection(responseBox)
    if (length(response) == 0) {
      errorCondition(recall = distdiagnostics, 
-                    message = gettextRcmdr("You must select a dependent (outcome) variable."))
+                    message = gettextRcmdr("You must select a response variable."))
      return()
    }
    alternative <- as.character(tclvalue(alternativeVariable))
@@ -496,15 +488,9 @@ DistWords2 <- function(x,y,z){
     }
   }
   clevel <- 1-y
- 
-  group1 <- x[[1]]
-  group2 <- x[[2]]
   
-  pval1 <- group1$p.value
-  pval2 <- group2$p.value
-  
-  groups1 <- levels(z)[1]
-  groups2 <- levels(z)[2]
+  group1 <- z[1]
+  group2 <- z[2]
   
   text1 <- paste("Test Information: This test determines whether the data of the two samples are normally distributed.
                   If the p-value is less than the alpha of ",clevel," then the data is not normally distributed. 
@@ -512,26 +498,6 @@ DistWords2 <- function(x,y,z){
                  \n \n",sep="")
   
   wrapper(text1)
-  #### Adding specific conclusions for each group in testing
-  if(pval1 >= clevel){
-    text3 <- paste("Test Results: Because p-value > alpha of ",clevel," , the data is normally distributed within ",groups1,". \n \n",sep="")
-    wrapper(text3)
-  }
-  
-  else if(pval1 < clevel){
-    text3 <- paste("Test Results: Because p-value < alpha of ",clevel," , the data is not normally distributed within ",groups1,". \n \n",sep="")
-    wrapper(text3)
-  }
-
-  if(pval2 >= clevel){
-    text4 <- paste("Test Results: Because p-value > alpha of ",clevel,", the data is normally distributed within ",groups2,".\n \n",sep="")
-    wrapper(text4)
-  }
-  else if(pval2 < clevel){
-    text4 <- paste("Test Results: Because our p-value < alpha of ",clevel,", the data is not normaly distributed within ",groups2,". \n\n", sep="")
-    wrapper(text4)
-  }
-
 }
 
 distnormal <- function(x){
@@ -543,7 +509,7 @@ distnormal <- function(x){
                               title = gettextRcmdr("Groups (pick one)"), 
                               initialSelection = varPosn(dialog.values$initial.group, "twoLevelFactor"))
   responseBox <- variableListBox(variablesFrame, Numeric(), 
-                                 title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
+                                 title = gettextRcmdr("Response Variable (pick one)"),
                                  initialSelection = varPosn(dialog.values$initial.response, "numeric"))
   onOK <- function() {
     group <- getSelection(groupBox)
@@ -555,7 +521,7 @@ distnormal <- function(x){
     response <- getSelection(responseBox)
     if (length(response) == 0) {
       errorCondition(recall = distdiagnostics, 
-                     message = gettextRcmdr("You must select a dependent (outcome) variable."))
+                     message = gettextRcmdr("You must select a response variable."))
       return()
     }
     level <- tclvalue(confidenceLevel)

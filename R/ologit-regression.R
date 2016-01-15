@@ -1,4 +1,4 @@
-# Modified on January 7, 2016 by Jessica Reese
+# Modified on November 27, 2013 by Jordan Gressel
 
 ologitWords <- function(x){
     wrapper <- function(text){
@@ -145,7 +145,7 @@ ordinalRegressionModelOrdinal2 <- function(){
 		}
 		if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=get(.activeDataSet, envir=.GlobalEnv)))){
 #        if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=eval(parse(text=.activeDataSet), envir=.GlobalEnv)))){
-			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Dependent (outcome) variable must be a factor"))
+			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Response variable must be a factor"))
 			return()
 		}
 		if (is.element(modelValue, listProportionalOddsModels())) {
