@@ -1,4 +1,4 @@
-# Modified on January 7, 2016 by Jessica Reese
+# Modified on November 27, 2013 by Jordan Gressel
 
 # Interpretation function
 wilcoxonMannWhitneyWords <- function(x,group,response){
@@ -38,7 +38,7 @@ twoSampleWilcoxonTest2 <- function () {
 	initializeDialog(title = gettextRcmdr("Two-Sample Wilcoxon Test"))
 	groupBox <- variableListBox(top, TwoLevelFactors(), title = gettextRcmdr("Groups (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.group, "twoLevelFactor"))
-	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
+	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Response Variable (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.response, "numeric"))
 	onOK <- function() {
 		group <- getSelection(groupBox)
@@ -48,7 +48,7 @@ twoSampleWilcoxonTest2 <- function () {
 		}
 		response <- getSelection(responseBox)
 		if (length(response) == 0) {
-			errorCondition(recall = twoSampleWilcoxonTest2, message = gettextRcmdr("You must select a dependent (outcome) variable."))
+			errorCondition(recall = twoSampleWilcoxonTest2, message = gettextRcmdr("You must select a response variable."))
 			return()
 		}
 		alternative <- as.character(tclvalue(alternativeVariable))

@@ -1,4 +1,4 @@
-#Last modified on January 7, 2016 by Jessica Reese
+#Last modified on November 26, 2013 by Jordan Gressel
 
 # Interpretation Function
 kruskalWallisWords <- function(x,group,response){
@@ -39,7 +39,7 @@ KruskalWallisTest2 <- function () {
 	initializeDialog(title = gettextRcmdr("Kruskal-Wallis Rank Sum Test"))
 	groupBox <- variableListBox(top, Factors(), title = gettextRcmdr("Groups (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.group, "factor"))
-	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
+	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Response Variable (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.response, "numeric"))
 	onOK <- function() {
 		group <- getSelection(groupBox)
@@ -51,7 +51,7 @@ KruskalWallisTest2 <- function () {
 		closeDialog()
 		putDialog("KruskalWallisTest2", list(initial.group = group, initial.response = response))
 		if (length(response) == 0) {
-			errorCondition(recall = KruskalWallisTest2, message = gettextRcmdr("You must select a dependent (outcome) variable."))
+			errorCondition(recall = KruskalWallisTest2, message = gettextRcmdr("You must select a response variable."))
 			return()
 		}
 		.activeDataSet <- ActiveDataSet()
