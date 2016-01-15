@@ -1,4 +1,4 @@
-#Modified on June 13, 2013 by Christa Schank
+#Modified on January 7, 2016 by Jessica Reese
 
 #Interpretation Function
 wordsAnova <- function(x,group,response){
@@ -47,7 +47,7 @@ oneWayAnova2 <- function () {
 	model <- ttkentry(modelFrame, width = "20", textvariable = modelName)
 	groupBox <- variableListBox(top, Factors(), title = gettextRcmdr("Groups (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.group, "factor"))
-	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Response Variable (pick one)"),
+	responseBox <- variableListBox(top, Numeric(), title = gettextRcmdr("Dependent (outcome) Variable (pick one)"),
 			initialSelection = varPosn(dialog.values$initial.response, "numeric"))
 	optionsFrame <- tkframe(top)
 	pairwiseVariable <- tclVar(dialog.values$initial.pairwise)
@@ -76,7 +76,7 @@ oneWayAnova2 <- function () {
 			return()
 		}
 		if (length(response) == 0) {
-			errorCondition(recall = oneWayAnova2, message = gettextRcmdr("You must select a response variable."))
+			errorCondition(recall = oneWayAnova2, message = gettextRcmdr("You must select a dependent (outcome) variable."))
 			return()
 		}
 		.activeDataSet <- ActiveDataSet()

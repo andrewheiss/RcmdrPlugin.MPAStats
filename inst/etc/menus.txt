@@ -38,11 +38,12 @@
     item    variableMenu   command         "Compute new variable..."                       Compute                     "activeDataSetP()"          ""
     item    variableMenu   command         "Standardize variables..."                      standardize                 "numericP()"                ""
     item    variableMenu   command         "Convert numeric variables to factors..."       numericToFactor             "numericP()"                ""
-    item    variableMenu   command         "Bin numeric variable..."                       binVariable                 "numericP()"                ""
+    item    variableMenu   command         "Bin (group) numeric variable..."                       binVariable                 "numericP()"                ""
     item    variableMenu   command         "Reorder factor levels..."                      reorderFactor               "factorsP()"                ""
     item    variableMenu   command         "Define contrasts for a factor..."              setContrasts                "factorsP()"                ""
     item    variableMenu   command         "Rename variables..."                           renameVariables             "activeDataSetP()"          ""
     item    variableMenu   command         "Delete variables from data set ..."            deleteVariable              "activeDataSetP()"          ""
+item    variableMenu   command         "Delete rows from data set ..."            RemoveRows              "activeDataSetP()"          ""
 
 #-----------------------------                                                                      
 # Descriptive statistics submenu                                                                    
@@ -53,6 +54,9 @@
     item    descStats   command             "View data set structure"      checkStructure          "activeDataSetP()"    ""
     item    descStats   command         "Numerical summaries..."      numericalSummaries      "numericP()"       "packageAvailable('abind')" 
     item    descStats   command         "Frequency distributions..."      frequencyDistribution      "factorsP()"    ""    
+    item    descStats   command         "Test of Normality"            ShapiroTest             "numericP()"      ""
+    item    descStats   command         "Test of Equal Variances"     LeveneTest              "numericP() && factorsP()" "packageAvailable('car')"
+
     # item    descStats   command             "Interval..."           helloWorld          "numericP()"    ""
     # item    descStats   command             "Ordinal..."            helloWorld          "activeDataSetP()"    ""
     # item    descStats   command             "Categorical..."        helloWorld          "factorsP()"    ""
@@ -62,9 +66,9 @@
 #-----------------------------                                                                      
 # Distribution Diagnostics submenu
    menu    distdiag    mpaMenu             ""                          ""                 ""            ""
-   item    mpaMenu     cascade             "Distribution Diagnostics"  distdiag           ""            ""
-   item    distdiag    command             "Two-group t-test Variance Test... (binary ind. var.)"        distdiagnostics    "numericP()"    ""
-   item    distdiag    command             "Two-group t-test Normality Test... (binary ind. var.)"        distnormal    "numericP()"    ""
+   item    mpaMenu     cascade             "Distribution diagnostics"  distdiag           ""            ""
+   item    distdiag    command             "Two-group Variance Test (t-test)... (binary ind. var.)"        distdiagnostics    "numericP()"    ""
+   item    distdiag    command             "Two-group Normality Test (t-test )... (binary ind. var.)"        distnormal    "numericP()"    ""
 
                                                                                                   
 #-----------------------------                                                                      
@@ -72,8 +76,8 @@
                                                                                                     
     menu    confInts    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu     cascade             "Confidence intervals"  confInts            ""            ""
-    item    confInts    command             "Interval data (t-test)..." confintContinuous2  "numericP()"   ""
-    item    confInts    command             "Binary data (proportion test)..."   confintBinomial2  "twoLevelFactorsP()"    "" 
+    item    confInts    command             "Confidence Interval for Continuous data (t-test)..." confintContinuous2  "numericP()"   ""
+    item    confInts    command             "Confidence Interval for Binary data (proportion test)..."   confintBinomial2  "twoLevelFactorsP()"    "" 
     # item    confInts    command             "Interval..."           confintContinuous   "numericP()"            ""
     # item    confInts    command             "Binary..."             confintBinomial     "numericP() || factorsP()"    ""
     # item    confInts    command             "Poisson..."            confintPoisson      "numericP()"            ""
@@ -93,8 +97,8 @@
 
     menu    pairedValues    mpaMenu             ""                      ""                  ""            ""
     item    mpaMenu         cascade             "Paired value testing"  pairedValues            ""            ""
-    item    pairedValues    command             "Paired t-test... (interval vars)"     pairedTTest2  "numericP(2)"   ""
-    item    pairedValues    command             "Wilcoxon signed rank test... (ordinal vars)"   pairedWilcoxonTest2  "numericP(2)"    ""
+    item    pairedValues    command             "Paired t-test... (interval var.)"     pairedTTest2  "numericP(2)"   ""
+    item    pairedValues    command             "Wilcoxon signed rank test... (ordinal var.)"   pairedWilcoxonTest2  "numericP(2)"    ""
                                                                                                     
                                                                                                     
 #-----------------------------                                                                      

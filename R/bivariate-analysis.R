@@ -1,4 +1,4 @@
-# Modified on March 19, 2014 by Jordan Gressel
+# Modified on Jan 6, 2016 by Jessica Reese
 
 #Interpretation Function
 #dat.factor represents the vector of factor data we are testing
@@ -22,12 +22,13 @@ singleProportionTestWords <- function(varname,level,x){
         up.down="larger than "}
     }
     
-    # text is the test assumption
+    # text is the test assumption (and information about success level)
     text <- paste("Test Information: This test determines whether the true proportion of ",varname," in the population is significantly ",up.down,null.value,".
                    \n The test assumes that data are randomly and independently sampled. Furthermore,
                     \r -The sample must include at least 30 observations (n >= 30)
                     \r -The size of the population must be at least ten times as large as the sample size (N >= 10n)
                     \r -The sample must include at least 5 successes and 5 failures (n * p >= 5 and n * (1-p) >= 5).
+                   \n Make sure ",tableval1," is what you want as your success level. If you want ",tableval2," as your success level, go to MPA Statistics > Edit data > Reorder factor levels and choose which level you want as your success. 
                     \r ****************************************************************
                    \n \n",sep="")
     wrapper(text)
@@ -73,6 +74,10 @@ singleProportionTest2 <- function () {
 		doItAndPrint(".Table")
     #Creates (and prints) the matrix "ntable" which has the levels and counts of the variable 
 		doItAndPrint(paste("ntable<-(rbind(.Table))"))
+    doItAndPrint(paste("tableval1<-(colnames(ntable)[1])"))
+    doItAndPrint(paste("tableval2<-(colnames(ntable)[2])"))
+    successlevel <- tableval1
+    doItAndPrint("successlevel")
     #varname takes the 1st column name (or 1st level) 
 		varname <- colnames(ntable)[1]
     
@@ -113,7 +118,7 @@ singleProportionTest2 <- function () {
 							"Normal approximation with\ncontinuity correction", "Exact binomial")), 
 			title = gettextRcmdr("Type of Test"), initialValue = dialog.values$initial.test)
 	tkgrid(getFrame(xBox), sticky = "nw")
-	tkgrid(labelRcmdr(pFrame, text = gettextRcmdr("Null hypothesis: p = "), 
+	tkgrid(labelRcmdr(pFrame, text = gettextRcmdr("Hypothesized proportion value = "), 
 					fg = "blue"), pField, sticky = "w")
 	tkgrid(pFrame, sticky = "w")
 	tkgrid(labelRcmdr(rightFrame, text = ""))
@@ -186,7 +191,7 @@ ordinalRegressionModel.ordinal <- function(){
 		}
 		if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=get(.activeDataSet, envir=.GlobalEnv)))){
 #        if (!is.factor(eval(parse(text=tclvalue(lhsVariable)), envir=eval(parse(text=.activeDataSet), envir=.GlobalEnv)))){
-			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Response variable must be a factor"))
+			errorCondition(recall=proportionalOddsModel, message=gettextRcmdr("Dependent (outcome) variable must be a factor"))
 			return()
 		}
 		if (is.element(modelValue, listProportionalOddsModels())) {
@@ -247,12 +252,13 @@ twoSampleProportionsTestWords <- function(x,groups,varname,table){
     prop1 <- x$estimate[1]
     prop2 <- x$estimate[2]
     
-    # text is the test assumption
+    # text is the test assumption (and information about success level)
     text <- paste("Test Information: This test determines whether there is a difference in the true proportion of ",varname," between levels of ",groups," in the population.
         \n The test assumes that data are randomly and independently sampled. Furthermore, for each sample,
         \r -The sample must include at least 30 observations (n >= 30)
         \r -The size of the population must be at least ten times as large as the sample size (N >= 10n)
         \r -The sample must include at least 5 successes and 5 failures (n * p >= 5 and n * (1-p) >= 5).
+       \n Make sure ",tableval1," is what you want as your success level. If you want ",tableval2," as your success level, go to MPA Statistics > Edit data > Reorder factor levels and choose which level you want as your success.
         \r ****************************************************************
       \n \n",sep="")
     wrapper(text)
@@ -278,7 +284,7 @@ twoSampleProportionsTest2 <- function () {
 	.twoLevelFactors <- TwoLevelFactors()
 	groupsBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Groups (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.groups, "twoLevelFactor"))
-	xBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Response Variable (pick one)"), 
+	xBox <- variableListBox(top, .twoLevelFactors, title = gettextRcmdr("Dependent (outcome) Variable (pick one)"), 
 			initialSelection = varPosn(dialog.values$initial.response, "twoLevelFactor"))
 	onOK <- function() {
 		groups <- getSelection(groupsBox)
@@ -290,12 +296,12 @@ twoSampleProportionsTest2 <- function () {
 		x <- getSelection(xBox)
 		if (length(x) == 0) {
 			errorCondition(recall = twoSampleProportionsTest2, 
-					message = gettextRcmdr("You must select a response variable."))
+					message = gettextRcmdr("You must select a dependent (outcome) variable."))
 			return()
 		}
 		if (x == groups) {
 			errorCondition(recall = twoSampleProportionsTest2, 
-					message = gettextRcmdr("Groups and response variables must be different."))
+					message = gettextRcmdr("Groups and dependent (outcome) variables must be different."))
 			return()
 		}
 		alternative <- as.character(tclvalue(alternativeVariable))
@@ -323,6 +329,10 @@ twoSampleProportionsTest2 <- function () {
         doItAndPrint("model1")
 		#Creates (and prints) the matrix "ntable" which has the levels and counts of the variable 
 		doItAndPrint(paste("ntable<-(rbind(.Table))"))
+		doItAndPrint(paste("tableval1<-(colnames(ntable)[1])"))
+		doItAndPrint(paste("tableval2<-(colnames(ntable)[2])"))
+		successlevel <- tableval1
+		doItAndPrint("successlevel")
 		#varname takes the 1st column name (or 1st level) 
 		varname <- colnames(ntable)[1]
         doItAndPrint(paste("twoSampleProportionsTestWords(model1,",'"',groups,'"',", varname=",'"',varname,'"',",.Table)",sep=""))
