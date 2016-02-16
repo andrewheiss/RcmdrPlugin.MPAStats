@@ -1,4 +1,4 @@
-# Last modified December 7, 2012 by Richard Payne
+# Last modified January 18, 2016 by Jessica Reese
 #--------------------------------------------
 
 .onAttach <- function(libname, pkgname){
@@ -24,7 +24,16 @@ if (getRversion() >= '2.15.1') globalVariables(c('top',
 # Addition by Richard Payne
 if (getRversion() >= '2.15.1') globalVariables(c('onHelp','alternativeVariable','variancesVariable','.groupsLabel','alternativeFrame','variancesFrame','testVariable','testFrame','percentsVariable','chisqTestVariable','chisqComponentsVariable','expFreqVariable','fisherTestVariable','.Test','.Table','percentsFrame','testsFrame', 'ntable'))
 
-
+# additional global variables from John Fox's findGlobals.R
+if (getRversion() >= '2.15.1') globalVariables(c('tkget',
+'levelsVariable', 'methodVariable', 'subdialog', 'subButtonsFrame',
+'entry1', 'onCancel', 'levelNames', 'levelsFrame', 'methodFrame',
+'optionsFrame', 'delimiterFrame', 'delimiterVariable',
+'colnamesVariable', 'rownamesVariable', 'quotesVariable',
+'getSheets', '.Workbook', '.Datasets', 'numbersButton',
+'namesButton', 'locationVariable', 'decimalVariable',
+'locationFrame', 'decimalFrame', 'contrastsVariable',
+'contrastsFrame', 'tableval1', 'tableval2', '.Z'))
 
 
 # Example dialog-less menu item
