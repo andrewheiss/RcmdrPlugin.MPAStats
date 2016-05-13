@@ -1,11 +1,14 @@
-# Last modified: 2014-1-25 by Jordan Gressel
+# Last modified: 2016-05-13 by Andrew Heiss
 #--------------------------------------------
 
 # Output a summary table of all numeric and factor columns,
 # with optional output for confidence intervals
 DataframeSummary <- function(x, conf.intervals=TRUE) {
-  if (class(x) != "data.frame")
+  if (!("data.frame") %in% class(x))
     stop("must supply a dataframe")
+  
+  # Temporarily force tbl and tbl_df objects to be data.frames
+  class(x) <- "data.frame"
   
   #-------------------------------------
   # Continuous, numeric data summaries
