@@ -4,7 +4,7 @@ This package provides an R Commander plugin that offers a unified menu of new an
 
 Functions and menus have been renamed according to the usage in PMGT 630 in the Master of Public Administration program at Brigham Young University.
 
-![RcmdrPlugin MPAStats Screenshot](https://dl.dropbox.com/u/1189942/GitHub/RcmdrPlugin-MPAStats-screenshot.png)
+![RcmdrPlugin MPAStats Screenshot](https://stats.andrewheiss.com/misc/RcmdrPlugin-MPAStats-screenshot.png)
 
 
 ## License
