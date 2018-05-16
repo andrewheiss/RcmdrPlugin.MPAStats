@@ -15,8 +15,8 @@ Brigham Young University.
 \tabular{ll}{
 Package: \tab RcmdrPlugin.MPAStats\cr
 Type: \tab Package\cr
-Version: \tab 1.1.5\cr
-Date: \tab 2014-05-05\cr
+Version: \tab 1.2.2\cr
+Date: \tab 2018-05-16\cr
 License: \tab GPL (>2)\cr
 }
 
@@ -30,7 +30,7 @@ a function to calculate logistic regression factor change coefficients (e^b) at
 \strong{Models -> Factor change coefficients}.
 }
 \author{
-Andrew Heiss, Richard Payne, Christa Schank
+Andrew Heiss, Richard Payne, Christa Schank, Jessica Reese
 
 Maintainer: Andrew Heiss <andrew@andrewheiss.com>
 }
